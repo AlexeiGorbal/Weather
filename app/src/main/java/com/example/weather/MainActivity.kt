@@ -6,11 +6,14 @@ import com.example.weather.databinding.ActivityMainBinding
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private var map: GoogleMap? = null
     private lateinit var binding: ActivityMainBinding
+
+    private var map: GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
