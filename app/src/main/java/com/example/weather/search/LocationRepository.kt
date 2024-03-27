@@ -17,9 +17,11 @@ class LocationRepository @Inject constructor() {
             Location(2781297, "Birmingham", "United Kingdom", 52.49, -1.86)
         )
 
-        locations.forEach {
-            if (input == it.name.take(input.length)) {
-                getListLocations.add(it)
+        if (input.isNotEmpty()) {
+            locations.forEach {
+                if (input == it.name.take(input.length)) {
+                    getListLocations.add(it)
+                }
             }
         }
         return getListLocations

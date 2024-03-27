@@ -16,6 +16,7 @@ class LocationViewHolder(view: View) : ViewHolder(view) {
     }
 
     companion object {
+
         fun from(parent: ViewGroup): LocationViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(
                 R.layout.location_item,

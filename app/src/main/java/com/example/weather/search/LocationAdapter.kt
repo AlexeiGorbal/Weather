@@ -1,27 +1,27 @@
 package com.example.weather.search
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 
-class LocationAdapter : Adapter<LocationViewHolder>() {
-
-    private val listLocations = mutableListOf<Location>()
-
-    fun addLocations(listLocations: List<Location>) {
-        this.listLocations.clear()
-        this.listLocations.addAll(listLocations)
-        notifyDataSetChanged()
-    }
+class LocationAdapter : ListAdapter<Location, LocationViewHolder>(LocationDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
         return LocationViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        holder.bind(listLocations[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return listLocations.size
+    private class LocationDiffCallback : DiffUtil.ItemCallback<Location>() {
+
+        override fun areItemsTheSame(oldItem: Location, newItem: Location): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Location, newItem: Location): Boolean {
+            return oldItem == newItem
+        }
     }
 }

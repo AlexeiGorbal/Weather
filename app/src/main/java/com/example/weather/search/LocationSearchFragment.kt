@@ -1,14 +1,13 @@
 package com.example.weather.search
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weather.databinding.FragmentLocationSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,51 +28,40 @@ class LocationSearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.listLocation.layoutManager = LinearLayoutManager(context)
         val adapter = LocationAdapter()
+        binding.listLocation.adapter = adapter
 
-        binding.searchLocation.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                viewModel.searchLocations(s.toString())
-            }
-        })
+        binding.searchLocation.doAfterTextChanged {
+            viewModel.searchLocations(it.toString())
+        }
 
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
                 is UiState.Initial -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.textResult.visibility = View.GONE
+                    adapter.submitList(emptyList())
+                    binding.progressBar.isVisible = false
+                    binding.noResults.isVisible = false
                 }
 
                 is UiState.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.textResult.visibility = View.GONE
+                    adapter.submitList(emptyList())
+                    binding.progressBar.isVisible = true
+                    binding.noResults.isVisible = false
                 }
 
                 is UiState.NoResults -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.textResult.visibility = View.VISIBLE
+                    adapter.submitList(emptyList())
+                    binding.progressBar.isVisible = false
+                    binding.noResults.isVisible = true
                 }
 
                 is UiState.Suggestions -> {
-                    adapter.addLocations(it.locations)
-                    binding.progressBar.visibility = View.GONE
+                    adapter.submitList(it.locations)
+                    binding.progressBar.isVisible = false
+                    binding.noResults.isVisible = false
                 }
             }
         }
-        binding.listLocation.adapter = adapter
-
     }
 
     override fun onDestroy() {
@@ -82,6 +70,6 @@ class LocationSearchFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() {}
+        fun newInstance() = LocationSearchFragment()
     }
 }
