@@ -8,8 +8,12 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.weather.databinding.FragmentLocationSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LocationSearchFragment : Fragment() {
@@ -31,8 +35,13 @@ class LocationSearchFragment : Fragment() {
         val adapter = LocationAdapter()
         binding.listLocation.adapter = adapter
 
+        var searchLocationJob: Job? = null
         binding.searchLocation.doAfterTextChanged {
-            viewModel.searchLocations(it.toString())
+            searchLocationJob?.cancel()
+            searchLocationJob = viewLifecycleOwner.lifecycleScope.launch {
+                delay(500L)
+                viewModel.searchLocations(it.toString())
+            }
         }
 
         viewModel.uiState.observe(viewLifecycleOwner) {
