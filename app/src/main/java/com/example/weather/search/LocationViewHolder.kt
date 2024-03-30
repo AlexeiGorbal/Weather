@@ -11,8 +11,11 @@ class LocationViewHolder(view: View) : ViewHolder(view) {
 
     private val binding: LocationItemBinding = LocationItemBinding.bind(view)
 
-    fun bind(location: Location) {
+    fun bind(location: Location, onItemClick: (Location) -> Unit) {
         binding.nameLocation.text = location.name
+        binding.nameLocation.setOnClickListener {
+            onItemClick(location)
+        }
     }
 
     companion object {

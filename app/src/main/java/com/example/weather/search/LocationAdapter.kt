@@ -4,14 +4,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
-class LocationAdapter : ListAdapter<Location, LocationViewHolder>(LocationDiffCallback()) {
+class LocationAdapter(private val onItemClick: (Location) -> Unit) :
+    ListAdapter<Location, LocationViewHolder>(LocationDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
         return LocationViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onItemClick)
     }
 
     private class LocationDiffCallback : DiffUtil.ItemCallback<Location>() {
