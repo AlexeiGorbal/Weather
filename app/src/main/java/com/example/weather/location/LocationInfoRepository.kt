@@ -1,11 +1,10 @@
-package com.example.weather.search
+package com.example.weather.location
 
-import com.example.weather.location.LocationInfo
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LocationRepository @Inject constructor() {
+class LocationInfoRepository @Inject constructor() {
 
     suspend fun searchByInput(input: String): List<LocationInfo> {
         val getListLocations = mutableListOf<LocationInfo>()
