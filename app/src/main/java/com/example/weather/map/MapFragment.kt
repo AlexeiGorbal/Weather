@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResult
 import com.example.weather.R
 import com.example.weather.databinding.FragmentMapBinding
 import com.example.weather.location.LocationInfo
+import com.example.weather.search.LocationSearchFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -25,6 +28,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var map: GoogleMap? = null
 
+    private val showLocationViewModel: ShowLocationViewModel by activityViewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +45,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         binding.searchField.setOnClickListener {
-            setFragmentResult(SEARCH_LOCATION_REQUEST_KEY, Bundle.EMPTY)
+            childFragmentManager.commit {
+                replace(R.id.child_fragment_container, LocationSearchFragment.newInstance())
+                addToBackStack(null)
+            }
+        }
+
+        showLocationViewModel.selectedLocation.observe(viewLifecycleOwner) {
+            childFragmentManager.popBackStack()
+            displayLocation(it)
         }
     }
 
@@ -50,28 +64,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-
-        val location: LocationInfo? = arguments?.getParcelable(LOCATION_KEY)
-        location?.let {
-            displayLocation(it)
-        }
     }
 
     private fun displayLocation(location: LocationInfo) {
         val zoom =
-            CameraPosition.builder().target(LatLng(location.lat, location.lon)).zoom(8F).build()
+            CameraPosition.builder().target(LatLng(location.lat, location.lon)).zoom(8f).build()
         map?.moveCamera(CameraUpdateFactory.newCameraPosition(zoom))
         map?.addMarker(MarkerOptions().position(LatLng(location.lat, location.lon)))
-    }
-
-    companion object {
-        const val SEARCH_LOCATION_REQUEST_KEY = "search_location"
-        const val LOCATION_KEY = "location"
-
-        fun newInstance(location: LocationInfo) = MapFragment().apply {
-            val bundle = Bundle()
-            bundle.putParcelable(LOCATION_KEY, location)
-            arguments = bundle
-        }
     }
 }

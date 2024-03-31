@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.weather.R
 import com.example.weather.databinding.FragmentLocationSearchBinding
 import com.example.weather.map.MapFragment
+import com.example.weather.map.ShowLocationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -26,6 +28,7 @@ class LocationSearchFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: LocationSearchViewModel by viewModels()
+    private val showLocationViewModel: ShowLocationViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,9 +40,7 @@ class LocationSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val adapter = LocationAdapter {
-            parentFragmentManager.commit {
-                replace(R.id.container, MapFragment.newInstance(it))
-            }
+            showLocationViewModel.onLocationSelected(it)
         }
         binding.listLocation.adapter = adapter
 
