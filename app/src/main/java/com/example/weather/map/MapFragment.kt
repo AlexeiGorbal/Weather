@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
-import androidx.fragment.app.setFragmentResult
 import com.example.weather.R
 import com.example.weather.databinding.FragmentMapBinding
 import com.example.weather.location.LocationInfo
@@ -30,7 +29,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private val showLocationViewModel: ShowLocationViewModel by activityViewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +44,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         binding.searchField.setOnClickListener {
             childFragmentManager.commit {
-                replace(R.id.child_fragment_container, LocationSearchFragment.newInstance())
+                replace(
+                    R.id.child_fragment_container,
+                    LocationSearchFragment.newInstance()
+                )
                 addToBackStack(null)
             }
         }
@@ -67,8 +68,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun displayLocation(location: LocationInfo) {
-        val zoom =
-            CameraPosition.builder().target(LatLng(location.lat, location.lon)).zoom(8f).build()
+        val zoom = CameraPosition.builder()
+            .target(LatLng(location.lat, location.lon))
+            .zoom(8f)
+            .build()
         map?.moveCamera(CameraUpdateFactory.newCameraPosition(zoom))
         map?.addMarker(MarkerOptions().position(LatLng(location.lat, location.lon)))
     }
