@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.example.weather.R
 import com.example.weather.databinding.FragmentMapBinding
-import com.example.weather.search.Location
+import com.example.weather.search.LocationInfo
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -51,13 +51,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        val location: Location? = arguments?.getParcelable(LOCATION_KEY)
+        val location: LocationInfo? = arguments?.getParcelable(LOCATION_KEY)
         location?.let {
             displayLocation(it)
         }
     }
 
-    private fun displayLocation(location: Location) {
+    private fun displayLocation(location: LocationInfo) {
         val zoom =
             CameraPosition.builder().target(LatLng(location.lat, location.lon)).zoom(8F).build()
         map?.moveCamera(CameraUpdateFactory.newCameraPosition(zoom))
@@ -68,7 +68,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         const val SEARCH_LOCATION_REQUEST_KEY = "search_location"
         const val LOCATION_KEY = "location"
 
-        fun newInstance(location: Location) = MapFragment().apply {
+        fun newInstance(location: LocationInfo) = MapFragment().apply {
             val bundle = Bundle()
             bundle.putParcelable(LOCATION_KEY, location)
             arguments = bundle

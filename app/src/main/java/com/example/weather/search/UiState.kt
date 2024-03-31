@@ -6,7 +6,7 @@ sealed class UiState {
 
     data object Loading : UiState()
 
-    data class Suggestions(val locations: List<Location>) : UiState()
+    data class Suggestions(val locations: List<LocationInfo>) : UiState()
 
     data object NoResults : UiState()
 }
