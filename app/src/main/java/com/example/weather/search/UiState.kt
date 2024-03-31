@@ -1,5 +1,7 @@
 package com.example.weather.search
 
+import com.example.weather.location.LocationInfo
+
 sealed class UiState {
 
     data object Initial : UiState()

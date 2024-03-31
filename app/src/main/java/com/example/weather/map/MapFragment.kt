@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import com.example.weather.R
 import com.example.weather.databinding.FragmentMapBinding
-import com.example.weather.search.LocationInfo
+import com.example.weather.location.LocationInfo
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

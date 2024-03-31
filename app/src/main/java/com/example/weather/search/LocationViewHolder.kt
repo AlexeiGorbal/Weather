@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.weather.R
 import com.example.weather.databinding.LocationItemBinding
+import com.example.weather.location.LocationInfo
 
 class LocationViewHolder(view: View) : ViewHolder(view) {
 

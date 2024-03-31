@@ -3,6 +3,7 @@ package com.example.weather.search
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.example.weather.location.LocationInfo
 
 class LocationAdapter(private val onItemClick: (LocationInfo) -> Unit) :
     ListAdapter<LocationInfo, LocationViewHolder>(LocationDiffCallback()) {
