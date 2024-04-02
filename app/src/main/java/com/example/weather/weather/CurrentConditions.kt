@@ -4,5 +4,5 @@ data class CurrentConditions(
     val weatherIcon: String,
     val weatherState: String,
     val tempF: Float,
-    val feelsLikeF: String
+    val feelsLikeF: Float
 )
