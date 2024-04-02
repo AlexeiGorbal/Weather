@@ -5,28 +5,30 @@
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/day_time"
+        android:id="@+id/time"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="12:00"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image_weather"
+        android:id="@+id/current_weather_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/ic_launcher_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/day_time" />
+        app:layout_constraintTop_toBottomOf="@id/time" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/temperature"
+        android:id="@+id/current_temperature"
         android:layout_width="50dp"
         android:layout_height="25dp"
+        android:gravity="center"
         android:text="3"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_weather" />
+        app:layout_constraintTop_toBottomOf="@id/current_weather_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
