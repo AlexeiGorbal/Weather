@@ -6,5 +6,5 @@ data class DayWeather(
     val weatherState: String,
     val minTempF: Float,
     val maxTempF: Float,
-    val hourlyForecast: List<HourlyWeather>
+    val hourlyForecast: List<HourWeather>
 )
