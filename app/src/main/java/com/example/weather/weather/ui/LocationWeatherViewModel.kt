@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.search.UiState
 import com.example.weather.weather.LocationWeather
 import com.example.weather.weather.LocationWeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
