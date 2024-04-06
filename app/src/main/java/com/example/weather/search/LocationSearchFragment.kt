@@ -75,6 +75,8 @@ class LocationSearchFragment : Fragment() {
                     binding.progressBar.isVisible = false
                     binding.noResults.isVisible = false
                 }
+
+                else -> {}
             }
         }
     }

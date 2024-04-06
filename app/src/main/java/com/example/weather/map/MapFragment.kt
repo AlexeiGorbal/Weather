@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -11,6 +12,8 @@ import com.example.weather.R
 import com.example.weather.databinding.FragmentMapBinding
 import com.example.weather.location.LocationInfo
 import com.example.weather.search.LocationSearchFragment
+import com.example.weather.weather.LocationWeather
+import com.example.weather.weather.ui.LocationWeatherFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -28,6 +32,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var map: GoogleMap? = null
 
     private val showLocationViewModel: ShowLocationViewModel by activityViewModels()
+
+    private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +48,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             childFragmentManager.findFragmentById(R.id.map_fragment_container) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
+        bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+
         binding.searchField.setOnClickListener {
             childFragmentManager.commit {
                 replace(
@@ -54,7 +63,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         showLocationViewModel.selectedLocation.observe(viewLifecycleOwner) {
             childFragmentManager.popBackStack()
-            displayLocation(it)
+            centerMap(it.lat, it.lon)
+            addTemporaryPinOnMap(it.lat, it.lon)
+            showLocationWeatherFragment(it.id)
+            bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
         }
     }
 
@@ -67,12 +79,24 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map = googleMap
     }
 
-    private fun displayLocation(location: LocationInfo) {
+    private fun centerMap(lat: Double, lon: Double) {
         val zoom = CameraPosition.builder()
-            .target(LatLng(location.lat, location.lon))
+            .target(LatLng(lat, lon))
             .zoom(8f)
             .build()
         map?.moveCamera(CameraUpdateFactory.newCameraPosition(zoom))
-        map?.addMarker(MarkerOptions().position(LatLng(location.lat, location.lon)))
+    }
+
+    private fun addTemporaryPinOnMap(lat: Double, lon: Double) {
+        map?.addMarker(MarkerOptions().position(LatLng(lat, lon)))
+    }
+
+    private fun showLocationWeatherFragment(locationId: Long) {
+        childFragmentManager.commit {
+            replace(
+                R.id.weather_fragment_container,
+                LocationWeatherFragment.newInstance(locationId)
+            )
+        }
     }
 }
