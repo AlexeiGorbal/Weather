@@ -21,7 +21,7 @@ class LocationWeatherRepository @Inject constructor() {
             )
         )
 
-        val currentConditions = CurrentConditions("icon", "cloudy", 54.5F, 53.0F)
+        val currentConditions = CurrentConditions("icon", 54.5F, "cloudy", 53.0F)
 
         val dayWeather = DayWeather(
             "icon",
