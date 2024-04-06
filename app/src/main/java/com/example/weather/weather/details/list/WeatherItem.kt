@@ -1,4 +1,4 @@
-package com.example.weather.weather.ui.list
+package com.example.weather.weather.details.list
 
 interface WeatherItem {
 

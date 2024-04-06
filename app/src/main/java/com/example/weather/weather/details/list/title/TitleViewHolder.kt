@@ -1,4 +1,4 @@
-package com.example.weather.weather.ui.list.title
+package com.example.weather.weather.details.list.title
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,17 +1,17 @@
-package com.example.weather.weather.ui.list
+package com.example.weather.weather.details.list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weather.weather.ui.list.currentconditions.CurrentConditionsItem
-import com.example.weather.weather.ui.list.currentconditions.CurrentConditionsViewHolder
-import com.example.weather.weather.ui.list.dayweather.DayWeatherItem
-import com.example.weather.weather.ui.list.dayweather.DayWeatherViewHolder
-import com.example.weather.weather.ui.list.hourlyforecast.HourlyForecastItem
-import com.example.weather.weather.ui.list.hourlyforecast.HourlyForecastViewHolder
-import com.example.weather.weather.ui.list.title.TitleItem
-import com.example.weather.weather.ui.list.title.TitleViewHolder
+import com.example.weather.weather.details.list.currentconditions.CurrentConditionsItem
+import com.example.weather.weather.details.list.currentconditions.CurrentConditionsViewHolder
+import com.example.weather.weather.details.list.dayweather.DayWeatherItem
+import com.example.weather.weather.details.list.dayweather.DayWeatherViewHolder
+import com.example.weather.weather.details.list.hourlyforecast.HourlyForecastItem
+import com.example.weather.weather.details.list.hourlyforecast.HourlyForecastViewHolder
+import com.example.weather.weather.details.list.title.TitleItem
+import com.example.weather.weather.details.list.title.TitleViewHolder
 
 class LocationWeatherAdapter :
     ListAdapter<WeatherItem, RecyclerView.ViewHolder>(DiffCallback()) {

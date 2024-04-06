@@ -1,4 +1,4 @@
-package com.example.weather.search
+package com.example.weather.location.search
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

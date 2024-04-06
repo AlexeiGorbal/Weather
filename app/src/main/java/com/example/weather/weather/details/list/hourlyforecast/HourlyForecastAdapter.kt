@@ -1,10 +1,10 @@
-package com.example.weather.weather.ui.list.hourlyforecast
+package com.example.weather.weather.details.list.hourlyforecast
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.weather.weather.ui.list.hourweather.HourWeatherItem
-import com.example.weather.weather.ui.list.hourweather.HourWeatherViewHolder
+import com.example.weather.weather.details.list.hourweather.HourWeatherItem
+import com.example.weather.weather.details.list.hourweather.HourWeatherViewHolder
 
 class HourlyForecastAdapter : ListAdapter<HourWeatherItem, HourWeatherViewHolder>(DiffCallback()) {
 

@@ -1,17 +1,16 @@
-package com.example.weather.search
+package com.example.weather.location.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.location.LocationInfoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LocationSearchViewModel @Inject constructor(
-    private val repository: LocationInfoRepository
+    private val repository: LocationSearchRepository
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<UiState>(UiState.Initial)

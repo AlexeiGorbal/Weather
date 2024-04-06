@@ -1,4 +1,4 @@
-package com.example.weather.weather.ui.list.hourlyforecast
+package com.example.weather.weather.details.list.hourlyforecast
 
 import android.view.LayoutInflater
 import android.view.View

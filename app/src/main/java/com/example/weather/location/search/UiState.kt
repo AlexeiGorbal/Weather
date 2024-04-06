@@ -1,4 +1,4 @@
-package com.example.weather.search
+package com.example.weather.location.search
 
 import com.example.weather.location.LocationInfo
 

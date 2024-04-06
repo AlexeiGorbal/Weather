@@ -1,7 +1,7 @@
-package com.example.weather.weather.ui.list.dayweather
+package com.example.weather.weather.details.list.dayweather
 
-import com.example.weather.weather.ui.list.WeatherItem
-import com.example.weather.weather.ui.list.hourweather.HourWeatherItem
+import com.example.weather.weather.details.list.WeatherItem
+import com.example.weather.weather.details.list.hourweather.HourWeatherItem
 
 data class DayWeatherItem(
     val weatherIcon: String,

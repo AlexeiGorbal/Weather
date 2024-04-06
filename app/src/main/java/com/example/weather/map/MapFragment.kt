@@ -10,10 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import com.example.weather.R
 import com.example.weather.databinding.FragmentMapBinding
-import com.example.weather.location.LocationInfo
-import com.example.weather.search.LocationSearchFragment
-import com.example.weather.weather.LocationWeather
-import com.example.weather.weather.ui.LocationWeatherFragment
+import com.example.weather.location.search.LocationSearchFragment
+import com.example.weather.weather.details.LocationWeatherFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

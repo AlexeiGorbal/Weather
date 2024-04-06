@@ -1,4 +1,4 @@
-package com.example.weather.weather.ui
+package com.example.weather.weather.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,13 @@ import androidx.fragment.app.viewModels
 import com.example.weather.databinding.FragmentLocationWeatherBinding
 import com.example.weather.weather.HourWeather
 import com.example.weather.weather.LocationWeather
-import com.example.weather.weather.ui.list.LocationWeatherAdapter
-import com.example.weather.weather.ui.list.WeatherItem
-import com.example.weather.weather.ui.list.currentconditions.CurrentConditionsItem
-import com.example.weather.weather.ui.list.dayweather.DayWeatherItem
-import com.example.weather.weather.ui.list.hourlyforecast.HourlyForecastItem
-import com.example.weather.weather.ui.list.hourweather.HourWeatherItem
-import com.example.weather.weather.ui.list.title.TitleItem
+import com.example.weather.weather.details.list.LocationWeatherAdapter
+import com.example.weather.weather.details.list.WeatherItem
+import com.example.weather.weather.details.list.currentconditions.CurrentConditionsItem
+import com.example.weather.weather.details.list.dayweather.DayWeatherItem
+import com.example.weather.weather.details.list.hourlyforecast.HourlyForecastItem
+import com.example.weather.weather.details.list.hourweather.HourWeatherItem
+import com.example.weather.weather.details.list.title.TitleItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 

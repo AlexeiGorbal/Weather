@@ -1,4 +1,4 @@
-package com.example.weather.weather.ui.list.currentconditions
+package com.example.weather.weather.details.list.currentconditions
 
 import android.view.LayoutInflater
 import android.view.View
