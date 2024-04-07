@@ -45,7 +45,7 @@ class LocationSearchFragment : Fragment() {
         binding.searchLocation.doAfterTextChanged {
             searchLocationJob?.cancel()
             searchLocationJob = viewLifecycleOwner.lifecycleScope.launch {
-                delay(500L)
+                delay(350L)
                 viewModel.searchLocations(it.toString())
             }
         }

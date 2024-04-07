@@ -18,6 +18,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "WEATHER_API_KEY", "\"eb77360fd72443f9811203156240203\"")
+        resValue("string", "map_api_key", "AIzaSyD7zD3MmpkNP9J4wK2vu7KvRIlHkHWLlcM")
     }
 
     buildTypes {
@@ -39,6 +42,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
