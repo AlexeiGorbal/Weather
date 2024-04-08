@@ -4,8 +4,8 @@ import com.example.weather.weather.details.list.WeatherItem
 import com.example.weather.weather.details.list.hourweather.HourWeatherItem
 
 data class DayWeatherItem(
-    val weatherIcon: String,
     val day: String,
+    val weatherIcon: String,
     val weatherState: String,
     val minTemp: String,
     val maxTemp: String,

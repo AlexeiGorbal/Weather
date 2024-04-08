@@ -68,8 +68,8 @@ class LocationWeatherFragment : BottomSheetDialogFragment() {
 
         val forecast = weather.forecast.map {
             DayWeatherItem(
+                it.timestamp.toString(),
                 it.weatherIcon,
-                it.day,
                 it.weatherState,
                 it.minTempF.toString(),
                 it.maxTempF.toString(),

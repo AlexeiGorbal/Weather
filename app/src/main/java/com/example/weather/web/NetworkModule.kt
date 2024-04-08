@@ -1,6 +1,7 @@
 package com.example.weather.web
 
 import com.example.weather.location.search.repository.LocationApi
+import com.example.weather.weather.details.repository.WeatherApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +17,19 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideWeatherApi(): LocationApi {
+    fun provideLocationApi(retrofit: Retrofit): LocationApi {
+        return retrofit.create(LocationApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideWeatherApi(retrofit: Retrofit): WeatherApi {
+        return retrofit.create(WeatherApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://api.weatherapi.com/v1/")
             .client(
@@ -26,6 +39,5 @@ class NetworkModule {
             )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(LocationApi::class.java)
     }
 }
