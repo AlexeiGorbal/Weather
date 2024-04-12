@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.weather.databinding.FragmentLocationSearchBinding
-import com.example.weather.map.ShowLocationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -25,7 +24,6 @@ class LocationSearchFragment : Fragment() {
         get() = _binding!!
 
     private val viewModel: LocationSearchViewModel by viewModels()
-    private val showLocationViewModel: ShowLocationViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +35,9 @@ class LocationSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val adapter = LocationAdapter {
-            showLocationViewModel.onLocationSelected(it)
+            val bundle = Bundle()
+            bundle.putParcelable(SELECTED_LOCATION_KEY, it)
+            setFragmentResult(SELECTED_LOCATION_REQUEST_KEY, bundle)
         }
         binding.listLocation.adapter = adapter
 
@@ -87,6 +87,10 @@ class LocationSearchFragment : Fragment() {
     }
 
     companion object {
+
+        const val SELECTED_LOCATION_REQUEST_KEY = "selected_location_request_key"
+        const val SELECTED_LOCATION_KEY = "selected_location_key"
+
         fun newInstance() = LocationSearchFragment()
     }
 }
