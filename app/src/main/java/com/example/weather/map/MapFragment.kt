@@ -74,11 +74,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.saveLocation.hide()
 
         binding.searchField.setOnClickListener {
-            openingFragment(LocationSearchFragment.newInstance())
+            openFragment(LocationSearchFragment.newInstance())
         }
 
         binding.savedLocations.setOnClickListener {
-            openingFragment(SavedLocationsFragment.newInstance())
+            openFragment(SavedLocationsFragment.newInstance())
         }
 
         binding.saveLocation.setOnClickListener {
@@ -132,12 +132,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         map = googleMap
     }
 
-    private fun openingFragment(fragment: Fragment) {
+    private fun openFragment(fragment: Fragment) {
         childFragmentManager.commit {
-            replace(
-                R.id.child_fragment_container,
-                fragment
-            )
+            replace(R.id.child_fragment_container, fragment)
             addToBackStack(null)
         }
     }

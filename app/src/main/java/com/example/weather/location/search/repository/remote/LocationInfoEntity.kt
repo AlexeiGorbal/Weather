@@ -1,4 +1,4 @@
-package com.example.weather.location.search.repository
+package com.example.weather.location.search.repository.remote
 
 import com.google.gson.annotations.SerializedName
 

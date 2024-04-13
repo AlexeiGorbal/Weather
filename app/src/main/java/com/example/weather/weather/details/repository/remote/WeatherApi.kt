@@ -1,4 +1,4 @@
-package com.example.weather.weather.details.repository
+package com.example.weather.weather.details.repository.remote
 
 import retrofit2.http.GET
 import retrofit2.http.Query

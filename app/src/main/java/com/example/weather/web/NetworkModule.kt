@@ -1,7 +1,7 @@
 package com.example.weather.web
 
-import com.example.weather.location.search.repository.LocationApi
-import com.example.weather.weather.details.repository.WeatherApi
+import com.example.weather.location.search.repository.remote.LocationApi
+import com.example.weather.weather.details.repository.remote.WeatherApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -2,7 +2,7 @@ package com.example.weather.db
 
 import android.content.Context
 import androidx.room.Room
-import com.example.weather.location.saved.db.LocationInfoDao
+import com.example.weather.location.saved.repository.local.LocationInfoDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

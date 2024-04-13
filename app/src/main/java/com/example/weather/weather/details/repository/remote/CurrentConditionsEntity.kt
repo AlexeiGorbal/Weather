@@ -1,9 +1,9 @@
-package com.example.weather.weather.details.repository
+package com.example.weather.weather.details.repository.remote
 
 import com.google.gson.annotations.SerializedName
 
-data class HourWeatherEntity(
-    @SerializedName("time_epoch") val timestamp: Long,
+data class CurrentConditionsEntity(
     @SerializedName("temp_f") val tempF: Float,
+    @SerializedName("feelslike_f") val feelsLikeF: Float,
     @SerializedName("condition") val weatherState: WeatherStateEntity
 )

@@ -1,4 +1,4 @@
-package com.example.weather.location.search
+package com.example.weather.location.search.list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter

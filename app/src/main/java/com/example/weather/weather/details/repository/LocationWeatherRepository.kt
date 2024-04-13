@@ -4,6 +4,10 @@ import com.example.weather.weather.CurrentConditions
 import com.example.weather.weather.DayWeather
 import com.example.weather.weather.HourWeather
 import com.example.weather.weather.LocationWeather
+import com.example.weather.weather.details.repository.remote.CurrentConditionsEntity
+import com.example.weather.weather.details.repository.remote.DayWeatherEntity
+import com.example.weather.weather.details.repository.remote.HourWeatherEntity
+import com.example.weather.weather.details.repository.remote.WeatherApi
 import javax.inject.Inject
 import javax.inject.Singleton
 

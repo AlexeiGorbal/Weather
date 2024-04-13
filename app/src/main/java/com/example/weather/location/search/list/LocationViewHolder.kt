@@ -1,4 +1,4 @@
-package com.example.weather.location.search
+package com.example.weather.location.search.list
 
 import android.view.LayoutInflater
 import android.view.View

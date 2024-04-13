@@ -1,4 +1,4 @@
-package com.example.weather.location.saved.db
+package com.example.weather.location.saved.repository.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

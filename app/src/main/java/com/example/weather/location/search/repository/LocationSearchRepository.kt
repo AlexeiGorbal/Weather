@@ -1,6 +1,8 @@
 package com.example.weather.location.search.repository
 
 import com.example.weather.location.LocationInfo
+import com.example.weather.location.search.repository.remote.LocationApi
+import com.example.weather.location.search.repository.remote.LocationInfoEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,10 +1,10 @@
-package com.example.weather.location.saved
+package com.example.weather.location.saved.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.example.weather.location.LocationInfo
-import com.example.weather.location.saved.db.LocationInfoDao
-import com.example.weather.location.saved.db.LocationInfoEntity
+import com.example.weather.location.saved.repository.local.LocationInfoDao
+import com.example.weather.location.saved.repository.local.LocationInfoEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
