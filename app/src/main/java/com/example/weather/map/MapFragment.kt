@@ -22,8 +22,10 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
@@ -31,7 +33,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPS
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private var _binding: FragmentMapBinding? = null
     private val binding: FragmentMapBinding
@@ -120,6 +122,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             } else {
                 binding.saveLocation.setImageResource(R.drawable.ic_bookmark_add)
             }
+
+            viewModel.locations.observe(viewLifecycleOwner) { list ->
+                list.map { location ->
+                    addSavedPinOnMap(location)
+                }
+            }
         }
     }
 
@@ -130,6 +138,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        map?.setOnMarkerClickListener(this)
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        viewModel.onLocationSelected(marker.tag as LocationInfo)
+            viewModel.selectedLocation.observe(viewLifecycleOwner) {
+                showLocationWeatherFragment(it.id)
+                bottomSheetBehavior?.state = STATE_COLLAPSED
+            }
+        return false
     }
 
     private fun openFragment(fragment: Fragment) {
@@ -149,6 +167,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun addTemporaryPinOnMap(lat: Double, lon: Double) {
         map?.addMarker(MarkerOptions().position(LatLng(lat, lon)))
+    }
+
+    private fun addSavedPinOnMap(location: LocationInfo) {
+        map?.addMarker(
+            MarkerOptions().position(LatLng(location.lat, location.lon))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+            //                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bookmarks))
+        )?.tag = LocationInfo(
+            location.id,
+            location.name,
+            location.region,
+            location.country,
+            location.lat,
+            location.lon
+        )
     }
 
     private fun showLocationWeatherFragment(locationId: Long) {

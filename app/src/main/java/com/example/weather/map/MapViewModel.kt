@@ -19,6 +19,9 @@ class MapViewModel @Inject constructor(
     val selectedLocation: LiveData<LocationInfo>
         get() = _selectedLocation
 
+    val locations: LiveData<List<LocationInfo>>
+        get() = repository.getLocations()
+
     private val _isLocationSaved = MutableLiveData<Boolean>()
     val isLocationSaved: LiveData<Boolean>
         get() = _isLocationSaved
