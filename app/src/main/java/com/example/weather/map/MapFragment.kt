@@ -109,10 +109,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             }
         }
 
-        viewModel.selectedLocation.observe(viewLifecycleOwner) { locationInfoItem ->
-            centerMap(locationInfoItem.lat, locationInfoItem.lon)
-            addTemporaryPinOnMap(locationInfoItem.lat, locationInfoItem.lon)
-            showLocationWeatherFragment(locationInfoItem.id)
+        viewModel.selectedLocation.observe(viewLifecycleOwner) {
+            centerMap(it.lat, it.lon)
+            addTemporaryPinOnMap(it)
+            showLocationWeatherFragment(it.id)
             bottomSheetBehavior?.state = STATE_COLLAPSED
         }
 
@@ -122,12 +122,10 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             } else {
                 binding.saveLocation.setImageResource(R.drawable.ic_bookmark_add)
             }
+        }
 
-            viewModel.locations.observe(viewLifecycleOwner) { list ->
-                list.map { location ->
-                    addSavedPinOnMap(location)
-                }
-            }
+        viewModel.locations.observe(viewLifecycleOwner) {
+            it.map(::addSavedPinOnMap)
         }
     }
 
@@ -142,12 +140,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        viewModel.onLocationSelected(marker.tag as LocationInfo)
-            viewModel.selectedLocation.observe(viewLifecycleOwner) {
-                showLocationWeatherFragment(it.id)
-                bottomSheetBehavior?.state = STATE_COLLAPSED
-            }
-        return false
+        val location = marker.tag as? LocationInfo
+        if (location != null) {
+            viewModel.onLocationSelected(location)
+        }
+        return true
     }
 
     private fun openFragment(fragment: Fragment) {
@@ -165,23 +162,20 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         map?.moveCamera(CameraUpdateFactory.newCameraPosition(zoom))
     }
 
-    private fun addTemporaryPinOnMap(lat: Double, lon: Double) {
-        map?.addMarker(MarkerOptions().position(LatLng(lat, lon)))
+    private fun addTemporaryPinOnMap(location: LocationInfo) {
+        val marker = map?.addMarker(
+            MarkerOptions().position(LatLng(location.lat, location.lon))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+        )
+        marker?.tag = location
     }
 
     private fun addSavedPinOnMap(location: LocationInfo) {
-        map?.addMarker(
+        val marker = map?.addMarker(
             MarkerOptions().position(LatLng(location.lat, location.lon))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-            //                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_bookmarks))
-        )?.tag = LocationInfo(
-            location.id,
-            location.name,
-            location.region,
-            location.country,
-            location.lat,
-            location.lon
         )
+        marker?.tag = location
     }
 
     private fun showLocationWeatherFragment(locationId: Long) {
