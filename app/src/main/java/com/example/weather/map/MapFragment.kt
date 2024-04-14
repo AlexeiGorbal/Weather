@@ -8,6 +8,8 @@ import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.example.weather.R
 import com.example.weather.databinding.FragmentMapBinding
 import com.example.weather.location.LocationInfo
@@ -29,6 +31,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -112,23 +115,29 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        viewModel.selectedLocation.observe(viewLifecycleOwner) {
-            centerMap(it.lat, it.lon)
-            pinLayer?.updateTemporaryPinOnMap(it)
-            showLocationWeatherFragment(it.id)
-            bottomSheetBehavior?.state = STATE_COLLAPSED
-        }
-
-        viewModel.isLocationSaved.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.saveLocation.setImageResource(R.drawable.ic_bookmark_added)
-            } else {
-                binding.saveLocation.setImageResource(R.drawable.ic_bookmark_add)
+        lifecycleScope.launch {
+            viewModel.selectedLocation.flowWithLifecycle(lifecycle).collect {
+                centerMap(it.lat, it.lon)
+                pinLayer?.updateTemporaryPinOnMap(it)
+                showLocationWeatherFragment(it.id)
+                bottomSheetBehavior?.state = STATE_COLLAPSED
             }
         }
 
-        viewModel.locations.observe(viewLifecycleOwner) {
-            pinLayer?.updateSavedPinsOnMap(it)
+        lifecycleScope.launch {
+            viewModel.isLocationSaved.flowWithLifecycle(lifecycle).collect {
+                if (it) {
+                    binding.saveLocation.setImageResource(R.drawable.ic_bookmark_added)
+                } else {
+                    binding.saveLocation.setImageResource(R.drawable.ic_bookmark_add)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.locations.flowWithLifecycle(lifecycle).collect {
+                pinLayer?.updateSavedPinsOnMap(it)
+            }
         }
     }
 

@@ -1,10 +1,10 @@
 package com.example.weather.location.saved.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.example.weather.location.LocationInfo
 import com.example.weather.location.saved.repository.local.LocationInfoDao
 import com.example.weather.location.saved.repository.local.LocationInfoEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,7 +25,7 @@ class SavedLocationsRepository @Inject constructor(
         return locationInfoDao.getLocationById(locationId)?.toModel()
     }
 
-    fun getLocations(): LiveData<List<LocationInfo>> {
+    fun getLocations(): Flow<List<LocationInfo>> {
         val locations = locationInfoDao.getLocations().map { locations ->
             locations.asSequence()
                 .map { it.toModel() }

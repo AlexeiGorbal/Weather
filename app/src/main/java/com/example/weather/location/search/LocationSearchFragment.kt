@@ -9,6 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.weather.databinding.FragmentLocationSearchBinding
 import com.example.weather.location.search.list.LocationAdapter
@@ -51,33 +52,33 @@ class LocationSearchFragment : Fragment() {
             }
         }
 
-        viewModel.uiState.observe(viewLifecycleOwner) {
-            when (it) {
-                is UiState.Initial -> {
-                    adapter.submitList(emptyList())
-                    binding.progressBar.isVisible = false
-                    binding.noResults.isVisible = false
-                }
+        lifecycleScope.launch {
+            viewModel.uiState.flowWithLifecycle(lifecycle).collect() {
+                when (it) {
+                    is UiState.Initial -> {
+                        adapter.submitList(emptyList())
+                        binding.progressBar.isVisible = false
+                        binding.noResults.isVisible = false
+                    }
 
-                is UiState.Loading -> {
-                    adapter.submitList(emptyList())
-                    binding.progressBar.isVisible = true
-                    binding.noResults.isVisible = false
-                }
+                    is UiState.Loading -> {
+                        adapter.submitList(emptyList())
+                        binding.progressBar.isVisible = true
+                        binding.noResults.isVisible = false
+                    }
 
-                is UiState.NoResults -> {
-                    adapter.submitList(emptyList())
-                    binding.progressBar.isVisible = false
-                    binding.noResults.isVisible = true
-                }
+                    is UiState.NoResults -> {
+                        adapter.submitList(emptyList())
+                        binding.progressBar.isVisible = false
+                        binding.noResults.isVisible = true
+                    }
 
-                is UiState.Suggestions -> {
-                    adapter.submitList(it.locations)
-                    binding.progressBar.isVisible = false
-                    binding.noResults.isVisible = false
+                    is UiState.Suggestions -> {
+                        adapter.submitList(it.locations)
+                        binding.progressBar.isVisible = false
+                        binding.noResults.isVisible = false
+                    }
                 }
-
-                else -> {}
             }
         }
     }

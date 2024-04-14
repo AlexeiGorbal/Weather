@@ -1,10 +1,10 @@
 package com.example.weather.location.saved.repository.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LocationInfoDao {
@@ -19,5 +19,5 @@ interface LocationInfoDao {
     suspend fun getLocationById(id: Long): LocationInfoEntity?
 
     @Query("SELECT * FROM LocationInfo")
-    fun getLocations(): LiveData<List<LocationInfoEntity>>
+    fun getLocations(): Flow<List<LocationInfoEntity>>
 }

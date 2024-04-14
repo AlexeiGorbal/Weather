@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.example.weather.databinding.FragmentSavedLocationsBinding
 import com.example.weather.location.saved.list.SavedLocationsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SavedLocationsFragment : Fragment() {
@@ -36,8 +39,10 @@ class SavedLocationsFragment : Fragment() {
         }
         binding.savedLocations.adapter = adapter
 
-        viewModel.locations.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        lifecycleScope.launch {
+            viewModel.locations.flowWithLifecycle(lifecycle).collect {
+                adapter.submitList(it)
+            }
         }
     }
 

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.example.weather.databinding.FragmentLocationWeatherBinding
 import com.example.weather.weather.HourWeather
 import com.example.weather.weather.LocationWeather
@@ -17,6 +19,7 @@ import com.example.weather.weather.details.list.hourweather.HourWeatherItem
 import com.example.weather.weather.details.list.title.TitleItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LocationWeatherFragment : BottomSheetDialogFragment() {
@@ -44,9 +47,11 @@ class LocationWeatherFragment : BottomSheetDialogFragment() {
             viewModel.loadWeather(it)
         }
 
-        viewModel.weather.observe(viewLifecycleOwner) {
-            val list = mapToWeatherItems(it)
-            adapter.submitList(list)
+        lifecycleScope.launch {
+            viewModel.weather.flowWithLifecycle(lifecycle).collect {
+                val list = mapToWeatherItems(it)
+                adapter.submitList(list)
+            }
         }
     }
 
