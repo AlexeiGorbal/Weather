@@ -22,24 +22,23 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentMapBinding? = null
     private val binding: FragmentMapBinding
         get() = _binding!!
 
     private var map: GoogleMap? = null
+    private var pinLayer: PinLayer? = null
 
     private val viewModel: MapViewModel by viewModels()
 
@@ -59,13 +58,17 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         mapFragment.getMapAsync(this)
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
-        bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetBehavior?.state = STATE_HIDDEN
         bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == STATE_COLLAPSED) {
                     binding.saveLocation.show()
                 } else {
                     binding.saveLocation.hide()
+                }
+
+                if (newState == STATE_HIDDEN) {
+                    pinLayer?.removeTemporaryPinFromMap()
                 }
             }
 
@@ -111,7 +114,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
         viewModel.selectedLocation.observe(viewLifecycleOwner) {
             centerMap(it.lat, it.lon)
-            addTemporaryPinOnMap(it)
+            pinLayer?.updateTemporaryPinOnMap(it)
             showLocationWeatherFragment(it.id)
             bottomSheetBehavior?.state = STATE_COLLAPSED
         }
@@ -125,7 +128,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         }
 
         viewModel.locations.observe(viewLifecycleOwner) {
-            it.map(::addSavedPinOnMap)
+            pinLayer?.updateSavedPinsOnMap(it)
         }
     }
 
@@ -136,15 +139,12 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        map?.setOnMarkerClickListener(this)
-    }
-
-    override fun onMarkerClick(marker: Marker): Boolean {
-        val location = marker.tag as? LocationInfo
-        if (location != null) {
-            viewModel.onLocationSelected(location)
+        map?.setOnMapClickListener {
+            bottomSheetBehavior?.state = STATE_HIDDEN
         }
-        return true
+        pinLayer = PinLayer(googleMap) {
+            viewModel.onLocationSelected(it)
+        }
     }
 
     private fun openFragment(fragment: Fragment) {
@@ -160,22 +160,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             .zoom(8f)
             .build()
         map?.moveCamera(CameraUpdateFactory.newCameraPosition(zoom))
-    }
-
-    private fun addTemporaryPinOnMap(location: LocationInfo) {
-        val marker = map?.addMarker(
-            MarkerOptions().position(LatLng(location.lat, location.lon))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-        )
-        marker?.tag = location
-    }
-
-    private fun addSavedPinOnMap(location: LocationInfo) {
-        val marker = map?.addMarker(
-            MarkerOptions().position(LatLng(location.lat, location.lon))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-        )
-        marker?.tag = location
     }
 
     private fun showLocationWeatherFragment(locationId: Long) {
