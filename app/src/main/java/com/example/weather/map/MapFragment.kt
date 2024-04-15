@@ -1,10 +1,13 @@
 package com.example.weather.map
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -20,6 +23,8 @@ import com.example.weather.location.search.LocationSearchFragment
 import com.example.weather.location.search.LocationSearchFragment.Companion.SELECTED_LOCATION_KEY
 import com.example.weather.location.search.LocationSearchFragment.Companion.SELECTED_LOCATION_REQUEST_KEY
 import com.example.weather.weather.details.LocationWeatherFragment
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -43,9 +48,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var map: GoogleMap? = null
     private var pinLayer: PinLayer? = null
 
+    private val permissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) {
+        if (it[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
+            getLastLocation()
+        }
+    }
+
+    private var fusedLocationClient: FusedLocationProviderClient? = null
+
     private val viewModel: MapViewModel by viewModels()
 
     private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        permissionLauncher.launch(
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +82,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.map_fragment_container) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
         bottomSheetBehavior?.state = STATE_HIDDEN
@@ -153,6 +178,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
         pinLayer = PinLayer(googleMap) {
             viewModel.onLocationSelected(it)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+        fusedLocationClient?.lastLocation?.addOnSuccessListener {
+            if (it != null) {
+                centerMap(it.latitude, it.longitude)
+            }
         }
     }
 
