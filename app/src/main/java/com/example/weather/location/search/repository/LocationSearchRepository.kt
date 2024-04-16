@@ -16,7 +16,7 @@ class LocationSearchRepository @Inject constructor(
     }
 
     suspend fun searchByLatLon(lat: Double, lon: Double): LocationInfo {
-        return api.getLocationByLatLon("$lat,$lon").toModel()
+        return api.getLocationByLatLon("$lat,$lon")[0].toModel()
     }
 
     private fun LocationInfoEntity.toModel(): LocationInfo {

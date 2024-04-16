@@ -40,7 +40,7 @@ class MapViewModel @Inject constructor(
     fun onLocationSelectedByLatLon(lat: Double, lon: Double) {
         viewModelScope.launch {
             val location = locationSearchRepository.searchByLatLon(lat, lon)
-            _isLocationSaved.value = true
+            _isLocationSaved.value = false
             _selectedLocation.value = location
         }
     }
