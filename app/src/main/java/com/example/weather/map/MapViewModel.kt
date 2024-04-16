@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.location.LocationInfo
 import com.example.weather.location.saved.repository.SavedLocationsRepository
+import com.example.weather.location.search.repository.LocationSearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
-    private val repository: SavedLocationsRepository
+    private val savedLocationsRepository: SavedLocationsRepository,
+    private val locationSearchRepository: LocationSearchRepository
 ) : ViewModel() {
 
     private val _selectedLocation = MutableStateFlow<LocationInfo?>(null)
@@ -21,7 +23,7 @@ class MapViewModel @Inject constructor(
         get() = _selectedLocation.filterNotNull()
 
     val locations: Flow<List<LocationInfo>>
-        get() = repository.getLocations()
+        get() = savedLocationsRepository.getLocations()
 
     private val _isLocationSaved = MutableStateFlow<Boolean?>(null)
     val isLocationSaved: Flow<Boolean>
@@ -29,8 +31,16 @@ class MapViewModel @Inject constructor(
 
     fun onLocationSelected(location: LocationInfo) {
         viewModelScope.launch {
-            val savedLocation = repository.getLocationById(location.id)
+            val savedLocation = savedLocationsRepository.getLocationById(location.id)
             _isLocationSaved.value = savedLocation != null
+            _selectedLocation.value = location
+        }
+    }
+
+    fun onLocationSelectedByLatLon(lat: Double, lon: Double) {
+        viewModelScope.launch {
+            val location = locationSearchRepository.searchByLatLon(lat, lon)
+            _isLocationSaved.value = true
             _selectedLocation.value = location
         }
     }
@@ -38,12 +48,12 @@ class MapViewModel @Inject constructor(
     fun onSelectedLocationSavedStateChanged() {
         viewModelScope.launch {
             val selectedLocation = _selectedLocation.value ?: return@launch
-            val savedLocation = repository.getLocationById(selectedLocation.id)
+            val savedLocation = savedLocationsRepository.getLocationById(selectedLocation.id)
             if (savedLocation == null) {
-                repository.addLocation(selectedLocation)
+                savedLocationsRepository.addLocation(selectedLocation)
                 _isLocationSaved.value = true
             } else {
-                repository.removeLocation(selectedLocation)
+                savedLocationsRepository.removeLocation(selectedLocation)
                 _isLocationSaved.value = false
             }
         }
