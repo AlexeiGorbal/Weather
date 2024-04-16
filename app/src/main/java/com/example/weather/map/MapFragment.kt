@@ -179,14 +179,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         map?.setOnMapLongClickListener { latLng ->
             viewModel.onLocationSelectedByLatLon(latLng.latitude, latLng.longitude)
-            lifecycleScope.launch {
-                viewModel.selectedLocation.flowWithLifecycle(lifecycle).collect {
-                    centerMap(it.lat, it.lon)
-                    pinLayer?.updateTemporaryPinOnMap(it)
-                    showLocationWeatherFragment(it.id)
-                    bottomSheetBehavior?.state = STATE_COLLAPSED
-                }
-            }
         }
 
         pinLayer = PinLayer(googleMap) {
