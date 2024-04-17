@@ -9,5 +9,5 @@ interface LocationApi {
     suspend fun getLocationsByInput(@Query("q") input: String): List<LocationInfoEntity>
 
     @GET("search.json?")
-    suspend fun getLocationByLatLon(@Query("q") latLng: String): List<LocationInfoEntity>
+    suspend fun getLocationByCoordinates(@Query("q") latLng: String): List<LocationInfoEntity>
 }

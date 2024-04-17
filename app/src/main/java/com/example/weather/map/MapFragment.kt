@@ -178,7 +178,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
 
         map?.setOnMapLongClickListener { latLng ->
-            viewModel.onLocationSelectedByLatLon(latLng.latitude, latLng.longitude)
+            viewModel.onLocationSelectedOnMap(latLng.latitude, latLng.longitude)
         }
 
         pinLayer = PinLayer(googleMap) {

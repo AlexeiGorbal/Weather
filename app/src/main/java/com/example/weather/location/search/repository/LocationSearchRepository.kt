@@ -15,8 +15,8 @@ class LocationSearchRepository @Inject constructor(
         return api.getLocationsByInput(input).map { it.toModel() }
     }
 
-    suspend fun searchByLatLon(lat: Double, lon: Double): LocationInfo {
-        return api.getLocationByLatLon("$lat,$lon")[0].toModel()
+    suspend fun searchByCoordinates(lat: Double, lon: Double): LocationInfo? {
+        return api.getLocationByCoordinates("$lat,$lon").firstOrNull()?.toModel()
     }
 
     private fun LocationInfoEntity.toModel(): LocationInfo {
