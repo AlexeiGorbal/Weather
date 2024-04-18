@@ -110,6 +110,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             openFragment(LocationSearchFragment.newInstance())
         }
 
+        binding.userLocation.setOnClickListener{
+            permissionLauncher.launch(
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
+            )
+        }
+
         binding.savedLocations.setOnClickListener {
             openFragment(SavedLocationsFragment.newInstance())
         }

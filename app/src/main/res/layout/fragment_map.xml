@@ -17,6 +17,14 @@
         android:background="@color/black" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/user_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center"
+        android:src="@drawable/ic_location_searching"
+        app:fabSize="mini" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saved_locations"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
