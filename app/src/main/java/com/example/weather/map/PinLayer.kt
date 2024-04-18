@@ -12,6 +12,7 @@ class PinLayer(
     onLocationClick: (LocationInfo) -> Unit
 ) {
 
+    private var userMarker: Marker? = null
     private var temporaryMarker: Marker? = null
     private var savedMarkers: List<Marker?> = emptyList()
 
@@ -23,6 +24,15 @@ class PinLayer(
             }
             true
         }
+    }
+
+    fun updateUserPinOnMap(location: LocationInfo) {
+        userMarker?.remove()
+        userMarker = map.addMarker(
+            MarkerOptions().position(LatLng(location.lat, location.lon))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+        )
+        userMarker?.tag = location
     }
 
     fun updateTemporaryPinOnMap(location: LocationInfo) {

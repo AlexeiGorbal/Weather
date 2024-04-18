@@ -51,8 +51,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
-        if (it[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
-            getLastLocation()
+        if (it[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
+            onLocationPermissionGranted()
         }
     }
 
@@ -66,7 +66,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         permissionLauncher.launch(
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
         )
     }
 
@@ -164,6 +164,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 pinLayer?.updateSavedPinsOnMap(it)
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.userLocation.flowWithLifecycle(lifecycle).collect {
+                pinLayer?.updateUserPinOnMap(it)
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -187,11 +193,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
+    private fun onLocationPermissionGranted() {
         fusedLocationClient?.lastLocation?.addOnSuccessListener {
-            if (it != null) {
-                centerMap(it.latitude, it.longitude)
-            }
+            viewModel.onUserLocationAvailable(it.latitude, it.longitude)
         }
     }
 

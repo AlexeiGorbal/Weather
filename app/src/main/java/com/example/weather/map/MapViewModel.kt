@@ -22,6 +22,10 @@ class MapViewModel @Inject constructor(
     val selectedLocation: Flow<LocationInfo>
         get() = _selectedLocation.filterNotNull()
 
+    private val _userLocation = MutableStateFlow<LocationInfo?>(null)
+    val userLocation: Flow<LocationInfo>
+        get() = _userLocation.filterNotNull()
+
     val locations: Flow<List<LocationInfo>>
         get() = savedLocationsRepository.getLocations()
 
@@ -29,20 +33,33 @@ class MapViewModel @Inject constructor(
     val isLocationSaved: Flow<Boolean>
         get() = _isLocationSaved.filterNotNull()
 
-    fun onLocationSelected(location: LocationInfo) {
+    fun onUserLocationAvailable(lat: Double, lon: Double) {
         viewModelScope.launch {
+            val location = locationSearchRepository.searchByCoordinates(lat, lon) ?: return@launch
+            _userLocation.value = location
+            _selectedLocation.value = location
+
             val savedLocation = savedLocationsRepository.getLocationById(location.id)
             _isLocationSaved.value = savedLocation != null
+        }
+    }
+
+    fun onLocationSelected(location: LocationInfo) {
+        viewModelScope.launch {
             _selectedLocation.value = location
+
+            val savedLocation = savedLocationsRepository.getLocationById(location.id)
+            _isLocationSaved.value = savedLocation != null
         }
     }
 
     fun onLocationSelectedOnMap(lat: Double, lon: Double) {
         viewModelScope.launch {
             val location = locationSearchRepository.searchByCoordinates(lat, lon) ?: return@launch
+            _selectedLocation.value = location
+
             val savedLocation = savedLocationsRepository.getLocationById(location.id)
             _isLocationSaved.value = savedLocation != null
-            _selectedLocation.value = location
         }
     }
 
