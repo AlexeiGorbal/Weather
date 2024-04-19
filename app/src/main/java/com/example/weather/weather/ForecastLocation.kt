@@ -1,6 +1,6 @@
 package com.example.weather.weather
 
-data class Location(
+data class ForecastLocation(
     val region: String,
     val country: String
 )

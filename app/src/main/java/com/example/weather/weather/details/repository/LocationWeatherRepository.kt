@@ -2,13 +2,13 @@ package com.example.weather.weather.details.repository
 
 import com.example.weather.weather.CurrentConditions
 import com.example.weather.weather.DayWeather
+import com.example.weather.weather.ForecastLocation
 import com.example.weather.weather.HourWeather
-import com.example.weather.weather.Location
 import com.example.weather.weather.LocationWeather
 import com.example.weather.weather.details.repository.remote.CurrentConditionsEntity
 import com.example.weather.weather.details.repository.remote.DayWeatherEntity
+import com.example.weather.weather.details.repository.remote.ForecastLocationEntity
 import com.example.weather.weather.details.repository.remote.HourWeatherEntity
-import com.example.weather.weather.details.repository.remote.LocationEntity
 import com.example.weather.weather.details.repository.remote.WeatherApi
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,8 +33,8 @@ class LocationWeatherRepository @Inject constructor(
         return LocationWeather(location, currentConditions, today, forecast)
     }
 
-    private fun LocationEntity.toModel(): Location {
-        return Location(region, country)
+    private fun ForecastLocationEntity.toModel(): ForecastLocation {
+        return ForecastLocation(region, country)
     }
 
     private fun CurrentConditionsEntity.toModel(): CurrentConditions {
