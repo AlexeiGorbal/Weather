@@ -16,6 +16,7 @@ import com.example.weather.weather.details.list.currentconditions.CurrentConditi
 import com.example.weather.weather.details.list.dayweather.DayWeatherItem
 import com.example.weather.weather.details.list.hourlyforecast.HourlyForecastItem
 import com.example.weather.weather.details.list.hourweather.HourWeatherItem
+import com.example.weather.weather.details.list.location.LocationItem
 import com.example.weather.weather.details.list.title.TitleItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,8 +63,8 @@ class LocationWeatherFragment : BottomSheetDialogFragment() {
                 weather.currentConditions.weatherState,
                 weather.currentConditions.tempF.toString(),
                 weather.currentConditions.feelsLikeF.toString()
-
             ),
+            LocationItem(weather.location.region, weather.location.country),
             TitleItem("Weather during the day"),
             HourlyForecastItem(
                 weather.today.hourlyForecast.map(::mapToHourWeatherItem)

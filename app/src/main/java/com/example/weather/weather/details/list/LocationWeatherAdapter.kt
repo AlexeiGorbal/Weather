@@ -10,6 +10,8 @@ import com.example.weather.weather.details.list.dayweather.DayWeatherItem
 import com.example.weather.weather.details.list.dayweather.DayWeatherViewHolder
 import com.example.weather.weather.details.list.hourlyforecast.HourlyForecastItem
 import com.example.weather.weather.details.list.hourlyforecast.HourlyForecastViewHolder
+import com.example.weather.weather.details.list.location.LocationItem
+import com.example.weather.weather.details.list.location.LocationViewHolder
 import com.example.weather.weather.details.list.title.TitleItem
 import com.example.weather.weather.details.list.title.TitleViewHolder
 
@@ -22,6 +24,7 @@ class LocationWeatherAdapter :
             is DayWeatherItem -> DAY_WEATHER_VIEW_TYPE
             is HourlyForecastItem -> HOUR_FORECAST_VIEW_TYPE
             is TitleItem -> TITLE_VIEW_TYPE
+            is LocationItem -> LOCATION_VIEW_TYPE
             else -> throw IllegalStateException()
         }
     }
@@ -32,6 +35,7 @@ class LocationWeatherAdapter :
             DAY_WEATHER_VIEW_TYPE -> DayWeatherViewHolder.from(parent)
             HOUR_FORECAST_VIEW_TYPE -> HourlyForecastViewHolder.from(parent)
             TITLE_VIEW_TYPE -> TitleViewHolder.from(parent)
+            LOCATION_VIEW_TYPE -> LocationViewHolder.from(parent)
             else -> throw IllegalStateException()
         }
     }
@@ -42,6 +46,7 @@ class LocationWeatherAdapter :
             is DayWeatherViewHolder -> holder.bind(getItem(position) as DayWeatherItem)
             is HourlyForecastViewHolder -> holder.bind(getItem(position) as HourlyForecastItem)
             is TitleViewHolder -> holder.bind(getItem(position) as TitleItem)
+            is LocationViewHolder -> holder.bind(getItem(position) as LocationItem)
             else -> throw IllegalStateException()
         }
     }
@@ -52,6 +57,7 @@ class LocationWeatherAdapter :
         private const val DAY_WEATHER_VIEW_TYPE = 1
         private const val HOUR_FORECAST_VIEW_TYPE = 2
         private const val TITLE_VIEW_TYPE = 3
+        private const val LOCATION_VIEW_TYPE = 4
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<WeatherItem>() {

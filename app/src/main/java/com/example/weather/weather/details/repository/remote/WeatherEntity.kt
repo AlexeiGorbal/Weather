@@ -3,6 +3,7 @@ package com.example.weather.weather.details.repository.remote
 import com.google.gson.annotations.SerializedName
 
 data class WeatherEntity(
+    @SerializedName("location") val location: LocationEntity,
     @SerializedName("current") val current: CurrentConditionsEntity,
     @SerializedName("forecast") val forecast: ForecastEntity,
 ) {
