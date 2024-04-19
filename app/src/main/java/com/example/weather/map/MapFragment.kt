@@ -25,6 +25,7 @@ import com.example.weather.location.search.LocationSearchFragment.Companion.SELE
 import com.example.weather.weather.details.LocationWeatherFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -110,7 +111,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             openFragment(LocationSearchFragment.newInstance())
         }
 
-        binding.userLocation.setOnClickListener{
+        binding.userLocation.setOnClickListener {
             permissionLauncher.launch(
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
             )
@@ -200,9 +201,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     private fun onLocationPermissionGranted() {
-        fusedLocationClient?.lastLocation?.addOnSuccessListener {
-            viewModel.onUserLocationAvailable(it.latitude, it.longitude)
-        }
+        fusedLocationClient
+            ?.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null)
+            ?.addOnSuccessListener {
+                if (it != null) {
+                    viewModel.onUserLocationAvailable(it.latitude, it.longitude)
+                }
+            }
     }
 
     private fun openFragment(fragment: Fragment) {
