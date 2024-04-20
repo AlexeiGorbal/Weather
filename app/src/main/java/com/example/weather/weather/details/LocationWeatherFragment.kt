@@ -8,16 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.weather.databinding.FragmentLocationWeatherBinding
-import com.example.weather.weather.HourWeather
-import com.example.weather.weather.LocationWeather
 import com.example.weather.weather.details.list.LocationWeatherAdapter
-import com.example.weather.weather.details.list.WeatherItem
-import com.example.weather.weather.details.list.currentconditions.CurrentConditionsItem
-import com.example.weather.weather.details.list.dayweather.DayWeatherItem
-import com.example.weather.weather.details.list.forecastlocation.ForecastLocationItem
-import com.example.weather.weather.details.list.hourlyforecast.HourlyForecastItem
-import com.example.weather.weather.details.list.hourweather.HourWeatherItem
-import com.example.weather.weather.details.list.title.TitleItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -50,49 +41,10 @@ class LocationWeatherFragment : BottomSheetDialogFragment() {
 
         lifecycleScope.launch {
             viewModel.weather.flowWithLifecycle(lifecycle).collect {
-                val list = mapToWeatherItems(it)
+                val list = WeatherItemMapper().map(it)
                 adapter.submitList(list)
             }
         }
-    }
-
-    private fun mapToWeatherItems(weather: LocationWeather): List<WeatherItem> {
-        val list = mutableListOf(
-            CurrentConditionsItem(
-                weather.currentConditions.weatherIcon,
-                weather.currentConditions.weatherState,
-                weather.currentConditions.tempF.toString(),
-                weather.currentConditions.feelsLikeF.toString()
-            ),
-            ForecastLocationItem(weather.location.region, weather.location.country),
-            TitleItem("Weather during the day"),
-            HourlyForecastItem(
-                weather.today.hourlyForecast.map(::mapToHourWeatherItem)
-            ),
-            TitleItem("Weather during a week"),
-        )
-
-        val forecast = weather.forecast.map {
-            DayWeatherItem(
-                it.timestamp.toString(),
-                it.weatherIcon,
-                it.weatherState,
-                it.minTempF.toString(),
-                it.maxTempF.toString(),
-                it.hourlyForecast.map(::mapToHourWeatherItem)
-            )
-        }
-        list.addAll(forecast)
-
-        return list
-    }
-
-    private fun mapToHourWeatherItem(weather: HourWeather): HourWeatherItem {
-        return HourWeatherItem(
-            weather.timestamp.toString(),
-            weather.weatherIcon,
-            weather.tempF.toString()
-        )
     }
 
     companion object {

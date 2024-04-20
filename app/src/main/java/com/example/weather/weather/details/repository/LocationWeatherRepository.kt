@@ -48,7 +48,7 @@ class LocationWeatherRepository @Inject constructor(
 
     private fun DayWeatherEntity.toModel(): DayWeather {
         return DayWeather(
-            timestamp,
+            timestamp * 1000L,
             "https:${day.weatherState.icon}",
             day.weatherState.text,
             day.minTempF,
@@ -57,6 +57,6 @@ class LocationWeatherRepository @Inject constructor(
     }
 
     private fun HourWeatherEntity.toModel(): HourWeather {
-        return HourWeather(timestamp, "https:${weatherState.icon}", tempF)
+        return HourWeather(timestamp * 1000L, "https:${weatherState.icon}", tempF)
     }
 }
