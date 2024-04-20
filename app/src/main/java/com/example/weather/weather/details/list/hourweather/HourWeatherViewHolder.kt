@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.weather.R
 import com.example.weather.databinding.ItemHourWeatherBinding
 
@@ -13,7 +14,7 @@ class HourWeatherViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(item: HourWeatherItem) {
         binding.time.text = item.time
-        //       binding.currentWeatherIcon.setImageResource(locationWeather.weatherIcon.toInt())
+        Glide.with(itemView).load(item.weatherIcon).into(binding.currentWeatherIcon)
         binding.currentTemperature.text = item.temp
     }
 

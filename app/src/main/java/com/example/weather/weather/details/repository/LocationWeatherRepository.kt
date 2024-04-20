@@ -38,13 +38,18 @@ class LocationWeatherRepository @Inject constructor(
     }
 
     private fun CurrentConditionsEntity.toModel(): CurrentConditions {
-        return CurrentConditions(weatherState.icon, tempF, weatherState.text, feelsLikeF)
+        return CurrentConditions(
+            "https:${weatherState.icon}",
+            tempF,
+            weatherState.text,
+            feelsLikeF
+        )
     }
 
     private fun DayWeatherEntity.toModel(): DayWeather {
         return DayWeather(
             timestamp,
-            day.weatherState.icon,
+            "https:${day.weatherState.icon}",
             day.weatherState.text,
             day.minTempF,
             day.maxTempF,
@@ -52,6 +57,6 @@ class LocationWeatherRepository @Inject constructor(
     }
 
     private fun HourWeatherEntity.toModel(): HourWeather {
-        return HourWeather(timestamp, weatherState.icon, tempF)
+        return HourWeather(timestamp, "https:${weatherState.icon}", tempF)
     }
 }
