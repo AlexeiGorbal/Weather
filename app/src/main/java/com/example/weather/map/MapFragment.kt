@@ -2,11 +2,14 @@ package com.example.weather.map
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -35,6 +38,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -62,6 +66,38 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val viewModel: MapViewModel by viewModels()
 
     private var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("MapFragment","?")
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fragment = childFragmentManager.findFragmentById(R.id.child_fragment_container)
+                if (fragment != null) {
+                    childFragmentManager.commit {
+                        remove(fragment)
+                    }
+                    return
+                }
+
+                when (bottomSheetBehavior?.state) {
+                    STATE_EXPANDED -> {
+                        bottomSheetBehavior?.state = STATE_COLLAPSED
+                    }
+
+                    STATE_COLLAPSED -> {
+                        bottomSheetBehavior?.state = STATE_HIDDEN
+                    }
+
+                    else -> {
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -213,7 +249,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun openFragment(fragment: Fragment) {
         childFragmentManager.commit {
             replace(R.id.child_fragment_container, fragment)
-            addToBackStack(null)
+          //  addToBackStack(null)
         }
     }
 
