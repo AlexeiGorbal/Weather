@@ -14,6 +14,7 @@
         android:id="@+id/search_field"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:background="@color/black" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start|center"
+        android:elevation="4dp"
         android:src="@drawable/ic_location_searching"
         app:fabSize="mini" />
 
@@ -29,22 +31,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center"
+        android:elevation="4dp"
         android:src="@drawable/ic_bookmarks"
         app:fabSize="mini" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_bookmark_add"
-        app:fabSize="normal"
-        app:layout_anchor="@id/bottom_sheet"
-        app:layout_anchorGravity="top|end" />
 
     <FrameLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="6dp"
         app:behavior_hideable="true"
         app:behavior_peekHeight="96dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -55,8 +50,18 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/save_location"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_bookmark_add"
+    app:fabSize="normal"
+    app:layout_anchor="@id/bottom_sheet"
+    app:layout_anchorGravity="top|end" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/child_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:elevation="10dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
