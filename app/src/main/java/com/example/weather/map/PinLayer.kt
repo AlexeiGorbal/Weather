@@ -1,13 +1,20 @@
 package com.example.weather.map
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import androidx.core.content.ContextCompat
+import com.example.weather.R
 import com.example.weather.location.LocationInfo
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 class PinLayer(
+    private val context: Context,
     private val map: GoogleMap,
     onLocationClick: (LocationInfo) -> Unit
 ) {
@@ -30,7 +37,7 @@ class PinLayer(
         userMarker?.remove()
         userMarker = map.addMarker(
             MarkerOptions().position(LatLng(location.lat, location.lon))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+                .icon(generateBitmapDescriptorFromRes(context, R.drawable.ic_user_location))
         )
         userMarker?.tag = location
     }
@@ -60,5 +67,25 @@ class PinLayer(
         )
         marker?.tag = location
         return marker
+    }
+
+    private fun generateBitmapDescriptorFromRes(
+        context: Context?, resId: Int
+    ): BitmapDescriptor {
+        val drawable = ContextCompat.getDrawable(context!!, resId)
+        drawable!!.setBounds(
+            1,
+            1,
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight
+        )
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        drawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 }

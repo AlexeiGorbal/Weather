@@ -69,7 +69,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("MapFragment","?")
+        Log.d("MapFragment", "?")
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val fragment = childFragmentManager.findFragmentById(R.id.child_fragment_container)
@@ -230,7 +230,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             viewModel.onLocationSelectedOnMap(latLng.latitude, latLng.longitude)
         }
 
-        pinLayer = PinLayer(googleMap) {
+        pinLayer = PinLayer(requireContext(), googleMap) {
             viewModel.onLocationSelected(it)
         }
     }
@@ -249,7 +249,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun openFragment(fragment: Fragment) {
         childFragmentManager.commit {
             replace(R.id.child_fragment_container, fragment)
-          //  addToBackStack(null)
+            addToBackStack(null)
         }
     }
 
@@ -258,7 +258,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             .target(LatLng(lat, lon))
             .zoom(8f)
             .build()
-        map?.moveCamera(CameraUpdateFactory.newCameraPosition(zoom))
+        map?.animateCamera(CameraUpdateFactory.newCameraPosition(zoom))
     }
 
     private fun showLocationWeatherFragment(locationId: Long) {
