@@ -11,6 +11,10 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.weather.R
 import com.example.weather.databinding.FragmentLocationSearchBinding
 import com.example.weather.location.search.list.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +40,11 @@ class LocationSearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.listLocation.addItemDecoration(
+        DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+            .apply { setDrawable(resources.getDrawable(R.drawable.divider_drawable)) }
+    )
+
         val adapter = LocationAdapter {
             val bundle = Bundle()
             bundle.putParcelable(SELECTED_LOCATION_KEY, it)
