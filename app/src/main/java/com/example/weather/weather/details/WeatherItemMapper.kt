@@ -30,14 +30,14 @@ class WeatherItemMapper {
                 weather.currentConditions.weatherIcon,
                 weather.currentConditions.weatherState,
                 weather.currentConditions.tempF.toString(),
-                weather.currentConditions.feelsLikeF.toString()
+                "Feels like " + weather.currentConditions.feelsLikeF.toString()
             ),
             ForecastLocationItem(weather.location.region, weather.location.country),
-            TitleItem("Weather during the day"),
+            TitleItem("24-Hour"),
             HourlyForecastItem(
                 weather.today.hourlyForecast.map(::mapToHourWeatherItem)
             ),
-            TitleItem("Weather during a week"),
+            TitleItem("7-Day Forecast"),
         )
 
         val forecast = weather.forecast.map(::mapToDayWeatherItem)

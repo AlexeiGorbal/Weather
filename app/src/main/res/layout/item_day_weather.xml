@@ -88,8 +88,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_hour_weather_height"
         android:orientation="horizontal"
-        tools:listitem="@layout/item_hour_weather"
+        android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/current_weather_icon" />
+        app:layout_constraintTop_toBottomOf="@id/current_weather_icon"
+        tools:listitem="@layout/item_hour_weather" />
 </androidx.constraintlayout.widget.ConstraintLayout>

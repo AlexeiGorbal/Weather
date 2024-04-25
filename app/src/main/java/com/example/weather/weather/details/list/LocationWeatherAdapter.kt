@@ -18,6 +18,18 @@ import com.example.weather.weather.details.list.title.TitleViewHolder
 class LocationWeatherAdapter :
     ListAdapter<WeatherItem, RecyclerView.ViewHolder>(DiffCallback()) {
 
+    private val expandedDayWeatherItems = mutableListOf<DayWeatherItem>()
+
+    private val onDayItemWeatherClick: (DayWeatherItem) -> Unit = {
+        val index = expandedDayWeatherItems.indexOf(it)
+        if (index == -1) {
+            expandedDayWeatherItems.add(it)
+        } else {
+            expandedDayWeatherItems.removeAt(index)
+        }
+        notifyItemChanged(currentList.indexOf(it))
+    }
+
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
             is CurrentConditionsItem -> CURRENT_CONDITIONS_VIEW_TYPE
@@ -43,7 +55,15 @@ class LocationWeatherAdapter :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is CurrentConditionsViewHolder -> holder.bind(getItem(position) as CurrentConditionsItem)
-            is DayWeatherViewHolder -> holder.bind(getItem(position) as DayWeatherItem)
+            is DayWeatherViewHolder -> {
+                val item = getItem(position) as DayWeatherItem
+                holder.bind(
+                    item,
+                    expandedDayWeatherItems.contains(item),
+                    onDayItemWeatherClick
+                )
+            }
+
             is HourlyForecastViewHolder -> holder.bind(getItem(position) as HourlyForecastItem)
             is TitleViewHolder -> holder.bind(getItem(position) as TitleItem)
             is ForecastLocationViewHolder -> holder.bind(getItem(position) as ForecastLocationItem)
