@@ -4,13 +4,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -69,7 +69,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("MapFragment", "?")
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val fragment = childFragmentManager.findFragmentById(R.id.child_fragment_container)
@@ -130,6 +129,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     binding.saveLocation.show()
                 } else {
                     binding.saveLocation.hide()
+                    binding.saveLocation.isVisible = false
                 }
 
                 if (newState == STATE_HIDDEN) {
