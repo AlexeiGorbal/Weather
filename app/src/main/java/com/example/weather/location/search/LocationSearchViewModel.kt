@@ -19,6 +19,11 @@ class LocationSearchViewModel @Inject constructor(
         get() = _uiState
 
     fun searchLocations(userInput: String) {
+        if (userInput.isBlank()) {
+            _uiState.value = UiState.NoResults
+            return
+        }
+
         _uiState.value = UiState.Loading
 
         viewModelScope.launch {

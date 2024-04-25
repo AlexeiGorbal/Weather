@@ -13,7 +13,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
 import com.example.weather.databinding.FragmentLocationSearchBinding
 import com.example.weather.location.search.list.LocationAdapter
@@ -40,10 +39,9 @@ class LocationSearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.listLocation.addItemDecoration(
-        DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             .apply { setDrawable(resources.getDrawable(R.drawable.divider_drawable)) }
-    )
+        binding.listLocation.addItemDecoration(dividerItemDecoration)
 
         val adapter = LocationAdapter {
             val bundle = Bundle()
@@ -59,6 +57,10 @@ class LocationSearchFragment : Fragment() {
                 delay(350L)
                 viewModel.searchLocations(it.toString())
             }
+        }
+
+        binding.back.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         lifecycleScope.launch {
