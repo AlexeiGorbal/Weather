@@ -10,7 +10,8 @@
         android:layout_width="50dp"
         android:layout_height="25dp"
         android:gravity="center"
-        android:text="12:00"
+        android:background="@android:color/transparent"
+        tools:text="12:00"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

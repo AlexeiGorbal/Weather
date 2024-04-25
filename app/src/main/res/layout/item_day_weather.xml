@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/item">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/current_weather_icon"
@@ -18,29 +19,56 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="6dp"
-        android:text="Monday"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@id/current_weather_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Monday" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_weather_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        android:text="cloudy"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/current_weather_icon"
-        app:layout_constraintTop_toBottomOf="@+id/day" />
+        app:layout_constraintTop_toBottomOf="@+id/day"
+        tools:text="cloudy" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/show_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_expand_more"
+        app:layout_constraintBottom_toTopOf="@id/hourly_forecast_recycler_view"
+        app:layout_constraintStart_toEndOf="@id/current_weather_state"
+        app:layout_constraintTop_toBottomOf="@id/day" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/arrow_down"
+        android:layout_width="16dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_arrow_down"
+        app:layout_constraintBottom_toTopOf="@id/hourly_forecast_recycler_view"
+        app:layout_constraintEnd_toStartOf="@id/min_temp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/min_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:text="1"
+        android:layout_marginHorizontal="6dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/hourly_forecast_recycler_view"
+        app:layout_constraintEnd_toStartOf="@id/arrow_up"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/arrow_up"
+        android:layout_width="16dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_arrow_up"
+        app:layout_constraintBottom_toTopOf="@id/hourly_forecast_recycler_view"
         app:layout_constraintEnd_toStartOf="@id/max_temp"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,10 +76,20 @@
         android:id="@+id/max_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:text="3"
+        android:layout_marginHorizontal="10dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/hourly_forecast_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hourly_forecast_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_hour_weather_height"
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_hour_weather"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/current_weather_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

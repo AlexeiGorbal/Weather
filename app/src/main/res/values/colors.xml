@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="gray">#596C6B6B</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#EC0808</color>
+    <color name="blue">#2879EE</color>
+    <color name="bottom_sheet">#B531437D</color>
+    <color name="item">#4DE4E4E4</color>
 </resources>

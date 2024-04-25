@@ -16,32 +16,31 @@
         tools:text="New York" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/comma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/region"
-        app:layout_constraintStart_toEndOf="@id/name"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="," />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/country"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/region"
-        app:layout_constraintStart_toEndOf="@id/comma"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="New York" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/region"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
-        tools:text="New York" />
+        tools:text="City of London, Greater London" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/comma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comma"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/country"
+        app:layout_constraintStart_toEndOf="@id/region" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/comma"
+        tools:text="United Kingdom" />
 </androidx.constraintlayout.widget.ConstraintLayout>
