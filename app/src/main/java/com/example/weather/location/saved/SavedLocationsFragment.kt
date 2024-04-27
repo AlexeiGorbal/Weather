@@ -39,7 +39,7 @@ class SavedLocationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-            .apply { setDrawable(resources.getDrawable(R.drawable.divider_drawable)) }
+            .apply { setDrawable(resources.getDrawable(R.drawable.divider)) }
         binding.savedLocations.addItemDecoration(dividerItemDecoration)
 
         val adapter = SavedLocationsAdapter {

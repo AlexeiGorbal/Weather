@@ -37,7 +37,7 @@ class PinLayer(
         userMarker?.remove()
         userMarker = map.addMarker(
             MarkerOptions().position(LatLng(location.lat, location.lon))
-                .icon(generateBitmapDescriptorFromRes(context, R.drawable.ic_user_location))
+                .icon(generateBitmapDescriptorFromRes(context, R.drawable.ic_user_location_pin))
         )
         userMarker?.tag = location
     }
@@ -69,16 +69,9 @@ class PinLayer(
         return marker
     }
 
-    private fun generateBitmapDescriptorFromRes(
-        context: Context?, resId: Int
-    ): BitmapDescriptor {
-        val drawable = ContextCompat.getDrawable(context!!, resId)
-        drawable!!.setBounds(
-            1,
-            1,
-            drawable.intrinsicWidth,
-            drawable.intrinsicHeight
-        )
+    private fun generateBitmapDescriptorFromRes(context: Context, resId: Int): BitmapDescriptor {
+        val drawable = ContextCompat.getDrawable(context, resId) ?: throw IllegalArgumentException()
+        drawable.setBounds(1, 1, drawable.intrinsicWidth, drawable.intrinsicHeight)
         val bitmap = Bitmap.createBitmap(
             drawable.intrinsicWidth,
             drawable.intrinsicHeight,

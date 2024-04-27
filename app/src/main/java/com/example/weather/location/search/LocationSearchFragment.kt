@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weather.R
 import com.example.weather.databinding.FragmentLocationSearchBinding
-import com.example.weather.location.search.list.LocationAdapter
+import com.example.weather.location.search.list.LocationSearchAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -40,10 +40,10 @@ class LocationSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val dividerItemDecoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-            .apply { setDrawable(resources.getDrawable(R.drawable.divider_drawable)) }
+            .apply { setDrawable(resources.getDrawable(R.drawable.divider)) }
         binding.listLocation.addItemDecoration(dividerItemDecoration)
 
-        val adapter = LocationAdapter {
+        val adapter = LocationSearchAdapter {
             val bundle = Bundle()
             bundle.putParcelable(SELECTED_LOCATION_KEY, it)
             setFragmentResult(SELECTED_LOCATION_REQUEST_KEY, bundle)

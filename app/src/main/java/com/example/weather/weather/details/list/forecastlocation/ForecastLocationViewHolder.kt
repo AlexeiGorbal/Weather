@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
-import com.example.weather.databinding.ItemLocationBinding
+import com.example.weather.databinding.ItemForecastLocationBinding
 
 class ForecastLocationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    private val binding: ItemLocationBinding = ItemLocationBinding.bind(view)
+    private val binding: ItemForecastLocationBinding = ItemForecastLocationBinding.bind(view)
 
     fun bind(item: ForecastLocationItem) {
         binding.currentRegion.text = item.region
@@ -20,7 +20,7 @@ class ForecastLocationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun from(parent: ViewGroup): ForecastLocationViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(
-                R.layout.item_location,
+                R.layout.item_forecast_location,
                 parent, false
             )
             return ForecastLocationViewHolder(view)

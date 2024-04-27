@@ -6,13 +6,13 @@ import com.example.weather.location.LocationInfo
 import com.example.weather.location.LocationInfoDiffCallback
 
 class SavedLocationsAdapter(private val onItemClick: (LocationInfo) -> Unit) :
-    ListAdapter<LocationInfo, SavedLocationsViewHolder>(LocationInfoDiffCallback()) {
+    ListAdapter<LocationInfo, SavedLocationViewHolder>(LocationInfoDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedLocationsViewHolder {
-        return SavedLocationsViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedLocationViewHolder {
+        return SavedLocationViewHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: SavedLocationsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SavedLocationViewHolder, position: Int) {
         holder.bind(getItem(position), onItemClick)
     }
 }

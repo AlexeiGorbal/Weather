@@ -144,7 +144,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         binding.saveLocation.hide()
 
         binding.searchField.setOnClickListener {
-            openFragment(LocationSearchFragment.newInstance())
+            openChildFragment(LocationSearchFragment.newInstance())
         }
 
         binding.userLocation.setOnClickListener {
@@ -154,7 +154,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.savedLocations.setOnClickListener {
-            openFragment(SavedLocationsFragment.newInstance())
+            openChildFragment(SavedLocationsFragment.newInstance())
         }
 
         binding.saveLocation.setOnClickListener {
@@ -246,7 +246,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
     }
 
-    private fun openFragment(fragment: Fragment) {
+    private fun openChildFragment(fragment: Fragment) {
         childFragmentManager.commit {
             replace(R.id.child_fragment_container, fragment)
             addToBackStack(null)

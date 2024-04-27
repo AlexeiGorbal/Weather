@@ -8,7 +8,7 @@ import com.example.weather.R
 import com.example.weather.databinding.ItemSavedLocationBinding
 import com.example.weather.location.LocationInfo
 
-class SavedLocationsViewHolder(view: View) : ViewHolder(view) {
+class SavedLocationViewHolder(view: View) : ViewHolder(view) {
 
     val binding = ItemSavedLocationBinding.bind(view)
 
@@ -22,10 +22,10 @@ class SavedLocationsViewHolder(view: View) : ViewHolder(view) {
 
     companion object {
 
-        fun from(parent: ViewGroup): SavedLocationsViewHolder {
+        fun from(parent: ViewGroup): SavedLocationViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_saved_location, parent, false)
-            return SavedLocationsViewHolder(view)
+            return SavedLocationViewHolder(view)
         }
     }
 }

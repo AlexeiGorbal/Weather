@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.weather.R
-import com.example.weather.databinding.LocationItemBinding
+import com.example.weather.databinding.ItemSearchLocationBinding
 import com.example.weather.location.LocationInfo
 
-class LocationViewHolder(view: View) : ViewHolder(view) {
+class LocationSearchViewHolder(view: View) : ViewHolder(view) {
 
-    private val binding: LocationItemBinding = LocationItemBinding.bind(view)
+    private val binding: ItemSearchLocationBinding = ItemSearchLocationBinding.bind(view)
 
     fun bind(location: LocationInfo, onItemClick: (LocationInfo) -> Unit) {
         binding.name.text = location.name
@@ -23,12 +23,12 @@ class LocationViewHolder(view: View) : ViewHolder(view) {
 
     companion object {
 
-        fun from(parent: ViewGroup): LocationViewHolder {
+        fun from(parent: ViewGroup): LocationSearchViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(
-                R.layout.location_item,
+                R.layout.item_search_location,
                 parent, false
             )
-            return LocationViewHolder(view)
+            return LocationSearchViewHolder(view)
         }
     }
 }
