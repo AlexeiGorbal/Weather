@@ -74,7 +74,7 @@
         android:layout_height="852dp"
         android:elevation="6dp"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="96dp"
+        app:behavior_peekHeight="127dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <androidx.fragment.app.FragmentContainerView
