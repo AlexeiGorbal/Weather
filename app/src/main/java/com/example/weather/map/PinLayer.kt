@@ -38,6 +38,7 @@ class PinLayer(
         userMarker = map.addMarker(
             MarkerOptions().position(LatLng(location.lat, location.lon))
                 .icon(generateBitmapDescriptorFromRes(context, R.drawable.ic_user_location_pin))
+                .zIndex(1f)
         )
         userMarker?.tag = location
     }
@@ -47,6 +48,7 @@ class PinLayer(
         temporaryMarker = map.addMarker(
             MarkerOptions().position(LatLng(location.lat, location.lon))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                .zIndex(2f)
         )
         temporaryMarker?.tag = location
     }
@@ -64,6 +66,7 @@ class PinLayer(
         val marker = map.addMarker(
             MarkerOptions().position(LatLng(location.lat, location.lon))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .zIndex(1f)
         )
         marker?.tag = location
         return marker
