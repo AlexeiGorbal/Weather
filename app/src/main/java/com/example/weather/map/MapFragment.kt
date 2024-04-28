@@ -25,6 +25,7 @@ import com.example.weather.location.saved.SavedLocationsFragment.Companion.SAVED
 import com.example.weather.location.search.LocationSearchFragment
 import com.example.weather.location.search.LocationSearchFragment.Companion.SELECTED_LOCATION_KEY
 import com.example.weather.location.search.LocationSearchFragment.Companion.SELECTED_LOCATION_REQUEST_KEY
+import com.example.weather.settings.SettingsFragment
 import com.example.weather.weather.details.LocationWeatherFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -145,6 +146,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         binding.searchField.setOnClickListener {
             openChildFragment(LocationSearchFragment.newInstance())
+        }
+
+        binding.settings.setOnClickListener {
+            openChildFragment(SettingsFragment.newInstance())
         }
 
         binding.userLocation.setOnClickListener {

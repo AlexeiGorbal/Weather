@@ -3,6 +3,7 @@ package com.example.weather.weather.details
 import com.example.weather.weather.DayWeather
 import com.example.weather.weather.HourWeather
 import com.example.weather.weather.LocationWeather
+import com.example.weather.weather.TemperatureUnit
 import com.example.weather.weather.details.list.WeatherItem
 import com.example.weather.weather.details.list.currentconditions.CurrentConditionsItem
 import com.example.weather.weather.details.list.dayweather.DayWeatherItem
@@ -15,7 +16,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class WeatherItemMapper {
+class WeatherItemMapper(private val tempUnit: TemperatureUnit) {
 
     private val dayFormatter = SimpleDateFormat("EEEE, F", Locale.getDefault()).apply {
         timeZone = TimeZone.getDefault()
@@ -29,8 +30,11 @@ class WeatherItemMapper {
             CurrentConditionsItem(
                 weather.currentConditions.weatherIcon,
                 weather.currentConditions.weatherState,
-                weather.currentConditions.tempF.toString(),
-                "Feels like " + weather.currentConditions.feelsLikeF.toString()
+                convertTemp(weather.currentConditions.tempF, tempUnit).toString(),
+                "Feels like " + convertTemp(
+                    weather.currentConditions.feelsLikeF,
+                    tempUnit
+                ).toString()
             ),
             ForecastLocationItem(weather.location.region, weather.location.country),
             TitleItem("24-Hour"),
@@ -50,7 +54,7 @@ class WeatherItemMapper {
         return HourWeatherItem(
             timeFormatter.format(weather.timestamp.toDate()),
             weather.weatherIcon,
-            weather.tempF.toString()
+            convertTemp(weather.tempF, tempUnit).toString()
         )
     }
 
@@ -59,10 +63,18 @@ class WeatherItemMapper {
             dayFormatter.format(weather.timestamp.toDate()),
             weather.weatherIcon,
             weather.weatherState,
-            weather.minTempF.toString(),
-            weather.maxTempF.toString(),
+            convertTemp(weather.minTempF, tempUnit).toString(),
+            convertTemp(weather.maxTempF, tempUnit).toString(),
             weather.hourlyForecast.map(::mapToHourWeatherItem)
         )
+    }
+
+    private fun convertTemp(tempF: Float, tempUnit: TemperatureUnit): Float {
+        return if (tempUnit == TemperatureUnit.CELSIUS) {
+            (tempF - 32) * (5f / 9f)
+        } else {
+            tempF
+        }
     }
 }
 

@@ -40,9 +40,11 @@ class LocationWeatherFragment : BottomSheetDialogFragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.weather.flowWithLifecycle(lifecycle).collect {
-                val list = WeatherItemMapper().map(it)
-                adapter.submitList(list)
+            viewModel.uiState.flowWithLifecycle(lifecycle).collect {
+                if (it is UiState.DisplayWeather) {
+                    val list = WeatherItemMapper(it.tempUnit).map(it.weather)
+                    adapter.submitList(list)
+                }
             }
         }
     }

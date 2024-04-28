@@ -51,6 +51,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    implementation("com.github.savvyapps:ToggleButtonLayout:1.3.0")
 
     implementation("com.google.android.material:material:1.11.0")
 
