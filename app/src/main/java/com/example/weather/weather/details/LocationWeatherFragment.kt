@@ -49,6 +49,11 @@ class LocationWeatherFragment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     companion object {
 
         private const val LOCATION_ID = "locationId"
