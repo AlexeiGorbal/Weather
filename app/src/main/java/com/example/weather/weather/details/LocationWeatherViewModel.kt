@@ -3,6 +3,7 @@ package com.example.weather.weather.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather.settings.repository.SettingsRepository
+import com.example.weather.weather.LocationWeather
 import com.example.weather.weather.details.repository.LocationWeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -20,10 +21,25 @@ class LocationWeatherViewModel @Inject constructor(
     val uiState: Flow<UiState>
         get() = _uiState
 
+    private var weather: LocationWeather? = null
+
+    init {
+        viewModelScope.launch {
+            settingsRepository.getObservableTempUnit().collect {
+                val weather = this@LocationWeatherViewModel.weather
+                if (weather != null) {
+                    _uiState.value = UiState.DisplayWeather(weather, it)
+                }
+            }
+        }
+    }
+
     fun loadWeather(locationId: Long) {
         viewModelScope.launch {
+            val weather = weatherRepository.loadWeather(locationId)
+            this@LocationWeatherViewModel.weather = weather
             _uiState.value = UiState.DisplayWeather(
-                weatherRepository.loadWeather(locationId),
+                weather,
                 settingsRepository.getTempUnit()
             )
         }
