@@ -64,7 +64,7 @@ class LocationSearchFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.uiState.flowWithLifecycle(lifecycle).collect() {
+            viewModel.uiState.flowWithLifecycle(lifecycle).collect {
                 when (it) {
                     is UiState.Initial -> {
                         adapter.submitList(emptyList())
