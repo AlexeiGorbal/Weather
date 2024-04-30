@@ -18,7 +18,7 @@ import java.util.TimeZone
 
 class WeatherItemMapper(private val tempUnit: TemperatureUnit) {
 
-    private val dayFormatter = SimpleDateFormat("EEEE, F", Locale.getDefault()).apply {
+    private val dayFormatter = SimpleDateFormat("EEEE, d", Locale.getDefault()).apply {
         timeZone = TimeZone.getDefault()
     }
     private val timeFormatter = SimpleDateFormat("H:mm", Locale.getDefault()).apply {
