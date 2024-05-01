@@ -19,8 +19,8 @@ class MapViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _selectedLocation = MutableStateFlow<LocationInfo?>(null)
-    val selectedLocation: Flow<LocationInfo>
-        get() = _selectedLocation.filterNotNull()
+    val selectedLocation: Flow<LocationInfo?>
+        get() = _selectedLocation
 
     private val _userLocation = MutableStateFlow<LocationInfo?>(null)
     val userLocation: Flow<LocationInfo>
@@ -75,5 +75,9 @@ class MapViewModel @Inject constructor(
                 _isLocationSaved.value = false
             }
         }
+    }
+
+    fun onLocationDeselected() {
+        _selectedLocation.value = null
     }
 }

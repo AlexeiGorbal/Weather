@@ -82,7 +82,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     }
 
                     STATE_COLLAPSED -> {
-                        bottomSheetBehavior?.state = STATE_HIDDEN
+                        viewModel.onLocationDeselected()
                     }
 
                     else -> {
@@ -128,10 +128,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 } else {
                     binding.saveLocation.hide()
                     binding.saveLocation.isVisible = false
-                }
-
-                if (newState == STATE_HIDDEN) {
-                    pinLayer?.removeTemporaryPinFromMap()
                 }
             }
 
@@ -187,10 +183,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         lifecycleScope.launch {
             viewModel.selectedLocation.flowWithLifecycle(lifecycle).collect {
-                centerMap(it.lat, it.lon)
-                pinLayer?.updateTemporaryPinOnMap(it)
-                showLocationWeatherFragment(it.id)
-                bottomSheetBehavior?.state = STATE_COLLAPSED
+                if (it == null) {
+                    pinLayer?.removeTemporaryPinFromMap()
+                    bottomSheetBehavior?.state = STATE_HIDDEN
+                } else {
+                    centerMap(it.lat, it.lon)
+                    pinLayer?.updateTemporaryPinOnMap(it)
+                    showLocationWeatherFragment(it.id)
+                    bottomSheetBehavior?.state = STATE_COLLAPSED
+                }
             }
         }
 
@@ -225,7 +226,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         map?.setOnMapClickListener {
-            bottomSheetBehavior?.state = STATE_HIDDEN
+            viewModel.onLocationDeselected()
         }
 
         map?.setOnMapLongClickListener { latLng ->
