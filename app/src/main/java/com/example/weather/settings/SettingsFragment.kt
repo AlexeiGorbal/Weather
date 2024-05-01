@@ -36,14 +36,16 @@ class SettingsFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.toggleButton.onToggledListener = { _, toggle, selected ->
-            when (toggle.id) {
-                R.id.celsius -> {
-                    viewModel.changeTempUnit(TemperatureUnit.CELSIUS)
-                }
+        binding.temperatureToggleGroup.addOnButtonCheckedListener { _, id, selected ->
+            if (selected) {
+                when (id) {
+                    R.id.celsius -> {
+                        viewModel.changeTempUnit(TemperatureUnit.CELSIUS)
+                    }
 
-                R.id.fahrenheit -> {
-                    viewModel.changeTempUnit(TemperatureUnit.FAHRENHEIT)
+                    R.id.fahrenheit -> {
+                        viewModel.changeTempUnit(TemperatureUnit.FAHRENHEIT)
+                    }
                 }
             }
         }
@@ -51,9 +53,11 @@ class SettingsFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.tempUnit.flowWithLifecycle(lifecycle).collect {
                 if (it == TemperatureUnit.CELSIUS) {
-                    binding.toggleButton.setToggled(R.id.celsius, true)
+                    binding.temperatureToggleGroup.check(R.id.celsius)
+                    binding.temperatureToggleGroup.uncheck(R.id.fahrenheit)
                 } else {
-                    binding.toggleButton.setToggled(R.id.fahrenheit, true)
+                    binding.temperatureToggleGroup.uncheck(R.id.celsius)
+                    binding.temperatureToggleGroup.check(R.id.fahrenheit)
                 }
             }
         }
