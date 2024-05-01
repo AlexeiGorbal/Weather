@@ -72,11 +72,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         super.onAttach(context)
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val fragment = childFragmentManager.findFragmentById(R.id.child_fragment_container)
-                if (fragment != null) {
-                    childFragmentManager.commit {
-                        remove(fragment)
-                    }
+                if (closeAnyChildFragment()) {
                     return
                 }
 
@@ -92,6 +88,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     else -> {
                         isEnabled = false
                         requireActivity().onBackPressedDispatcher.onBackPressed()
+                        isEnabled = true
                     }
                 }
             }
@@ -172,7 +169,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         ) { _, bundle ->
             val location: LocationInfo? = bundle.getParcelable(SELECTED_LOCATION_KEY)
             if (location != null) {
-                childFragmentManager.popBackStack()
+                closeAnyChildFragment()
                 viewModel.onLocationSelected(location)
             }
         }
@@ -183,7 +180,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         ) { _, bundle ->
             val location: LocationInfo? = bundle.getParcelable(SAVED_LOCATION_KEY)
             if (location != null) {
-                childFragmentManager.popBackStack()
+                closeAnyChildFragment()
                 viewModel.onLocationSelected(location)
             }
         }
@@ -254,7 +251,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun openChildFragment(fragment: Fragment) {
         childFragmentManager.commit {
             replace(R.id.child_fragment_container, fragment)
-            addToBackStack(null)
+        }
+    }
+
+    private fun closeAnyChildFragment(): Boolean {
+        val fragment = childFragmentManager.findFragmentById(R.id.child_fragment_container)
+        return if (fragment == null) {
+            false
+        } else {
+            childFragmentManager.commit { remove(fragment) }
+            true
         }
     }
 
