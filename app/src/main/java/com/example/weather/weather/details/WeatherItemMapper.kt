@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.math.roundToInt
 
 class WeatherItemMapper(private val tempUnit: TemperatureUnit) {
 
@@ -69,12 +70,12 @@ class WeatherItemMapper(private val tempUnit: TemperatureUnit) {
         )
     }
 
-    private fun convertTemp(tempF: Float, tempUnit: TemperatureUnit): Float {
+    private fun convertTemp(tempF: Float, tempUnit: TemperatureUnit): Int {
         return if (tempUnit == TemperatureUnit.CELSIUS) {
             (tempF - 32) * (5f / 9f)
         } else {
             tempF
-        }
+        }.roundToInt()
     }
 }
 
