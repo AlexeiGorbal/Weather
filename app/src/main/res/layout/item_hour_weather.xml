@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/item_hour_weather_height">
+    android:layout_height="@dimen/item_hour_weather_height"
+    android:background="@color/item">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/time"
         android:layout_width="50dp"
         android:layout_height="25dp"
-        android:gravity="center"
         android:background="@android:color/transparent"
-        tools:text="12:00"
+        android:gravity="center"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="12:00" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/current_weather_icon"
@@ -29,7 +30,7 @@
         android:layout_width="50dp"
         android:layout_height="25dp"
         android:gravity="center"
-        android:text="3"
+        tools:text="3"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current_weather_icon" />

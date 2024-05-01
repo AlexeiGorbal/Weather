@@ -87,6 +87,7 @@
         android:id="@+id/hourly_forecast_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_hour_weather_height"
+        android:background="?android:windowBackground"
         android:orientation="horizontal"
         android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

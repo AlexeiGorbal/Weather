@@ -54,7 +54,8 @@
             android:src="@drawable/ic_bookmarks"
             app:fabSize="mini"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_field" />
+            app:layout_constraintTop_toBottomOf="@id/search_field"
+            app:shapeAppearance="@drawable/bg_flouting_button" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/settings"
@@ -65,7 +66,8 @@
             android:src="@drawable/ic_settings"
             app:fabSize="mini"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/saved_locations" />
+            app:layout_constraintTop_toBottomOf="@id/saved_locations"
+            app:shapeAppearance="@drawable/bg_flouting_button" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/user_location"
@@ -76,13 +78,15 @@
             android:src="@drawable/ic_find_my_location"
             app:fabSize="mini"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings" />
+            app:layout_constraintTop_toBottomOf="@id/settings"
+            app:shapeAppearance="@drawable/bg_flouting_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="852dp"
+        android:background="@drawable/bd_bottom_sheet"
         android:elevation="6dp"
         app:behavior_hideable="true"
         app:behavior_peekHeight="127dp"
@@ -98,11 +102,13 @@
         android:id="@+id/save_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
         android:elevation="8dp"
         android:src="@drawable/ic_bookmark_add"
         app:fabSize="normal"
         app:layout_anchor="@id/bottom_sheet"
-        app:layout_anchorGravity="top|end" />
+        app:layout_anchorGravity="top|end"
+        app:shapeAppearance="@drawable/bg_flouting_button" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/child_fragment_container"

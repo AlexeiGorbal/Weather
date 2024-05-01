@@ -1,8 +1,13 @@
 <resources>
 
     <style name="Base.Theme.Weather" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:colorBackground">@color/white</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bd_bottom_sheet</item>
     </style>
 
     <style name="Theme.Weather" parent="Base.Theme.Weather" />

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.weather.R
@@ -27,6 +29,11 @@ class DayWeatherViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.minTemp.text = item.minTemp
         binding.maxTemp.text = item.maxTemp
         binding.hourlyForecastRecyclerView.isVisible = isExpanded
+        if (isExpanded) {
+            binding.showForecast.setImageResource(R.drawable.ic_expand_less)
+        } else {
+            binding.showForecast.setImageResource(R.drawable.ic_expand_more)
+        }
         adapter.submitList(item.hourlyForecast)
         itemView.setOnClickListener {
             onItemClick(item)
