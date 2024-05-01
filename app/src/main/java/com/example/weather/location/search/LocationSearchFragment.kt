@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -65,7 +66,6 @@ class LocationSearchFragment : Fragment() {
 
         binding.back.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
-            closeKeyboard()
         }
 
         lifecycleScope.launch {
@@ -99,9 +99,14 @@ class LocationSearchFragment : Fragment() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        showKeyboard()
+    override fun onResume() {
+        super.onResume()
+        showKeyboardFor(binding.searchLocation)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        hideKeyboardFor(binding.searchLocation)
     }
 
     override fun onDestroyView() {
@@ -109,21 +114,18 @@ class LocationSearchFragment : Fragment() {
         _binding = null
     }
 
-    private fun showKeyboard() {
+    private fun showKeyboardFor(editText: EditText) {
+        editText.requestFocus()
         val inputMethodManager =
             requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInputFromWindow(
-            binding.searchLocation.applicationWindowToken,
-            InputMethodManager.SHOW_FORCED,
-            0
-        )
-        binding.searchLocation.requestFocus()
+        inputMethodManager.showSoftInput(editText, 0)
     }
 
-    private fun closeKeyboard() {
+    private fun hideKeyboardFor(editText: EditText) {
         val imm =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+        imm.hideSoftInputFromWindow(editText.windowToken, 0)
+        editText.clearFocus()
     }
 
     companion object {
