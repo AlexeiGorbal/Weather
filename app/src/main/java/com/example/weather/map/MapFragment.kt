@@ -129,6 +129,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     binding.saveLocation.hide()
                     binding.saveLocation.isVisible = false
                 }
+
+                if (newState == STATE_HIDDEN) {
+                    viewModel.onLocationDeselected()
+                }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
