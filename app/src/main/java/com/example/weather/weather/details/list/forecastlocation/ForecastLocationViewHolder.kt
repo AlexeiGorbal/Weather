@@ -12,8 +12,7 @@ class ForecastLocationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding: ItemForecastLocationBinding = ItemForecastLocationBinding.bind(view)
 
     fun bind(item: ForecastLocationItem) {
-        binding.currentRegion.text = item.region
-        binding.currentCountry.text = item.country
+        binding.currentRegion.text = "${item.region}, ${item.country}"
     }
 
     companion object {
