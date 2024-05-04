@@ -14,7 +14,7 @@ class SavedLocationViewHolder(view: View) : ViewHolder(view) {
 
     fun bind(location: LocationInfo, onItemClick: (LocationInfo) -> Unit) {
         binding.name.text = location.name
-        binding.country.text = location.country
+        binding.region.text = "${location.region}, ${location.country}"
         itemView.setOnClickListener {
             onItemClick(location)
         }

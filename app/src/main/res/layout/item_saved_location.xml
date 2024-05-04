@@ -7,21 +7,29 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/name"
-        android:layout_margin="6dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/region"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="20sp"
-        tools:text="London" />
+        tools:text="New York" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/country"
-        android:layout_marginStart="6dp"
+        android:id="@+id/region"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
-        android:textSize="14sp"
-        tools:text="United Kingdom" />
+        tools:text="City of London, Greater London" />
 </androidx.constraintlayout.widget.ConstraintLayout>
