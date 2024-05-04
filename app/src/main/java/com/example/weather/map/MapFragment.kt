@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
@@ -43,6 +42,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDE
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlin.math.max
+import kotlin.math.min
 
 @AndroidEntryPoint
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -119,27 +120,39 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
+        val bottomSheetPeekHeight =
+            resources.getDimensionPixelSize(R.dimen.bottom_sheet_peek_height)
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
         bottomSheetBehavior?.state = STATE_HIDDEN
         bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == STATE_COLLAPSED) {
-                    binding.saveLocation.show()
-                } else {
-                    binding.saveLocation.hide()
-                    binding.saveLocation.isVisible = false
-                }
-
                 if (newState == STATE_HIDDEN) {
                     viewModel.onLocationDeselected()
                 }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                val saveLocationHalfHeight = binding.saveLocation.height / 2
+                if (slideOffset > 0) {
+                    binding.saveLocation.alpha = 1 - min(1f, slideOffset * 2)
 
+                    val progress = slideOffset
+                    binding.saveLocation.translationY =
+                        -(bottomSheetPeekHeight + progress * (bottomSheet.height - bottomSheetPeekHeight)) + saveLocationHalfHeight
+                } else {
+                    binding.saveLocation.alpha = 1 + max(-1f, slideOffset * 2)
+
+                    val progress = 1 + slideOffset
+                    binding.saveLocation.translationY =
+                        -(progress * bottomSheetPeekHeight) + saveLocationHalfHeight
+                }
+
+                val progress = 1 + min(0f, slideOffset)
+                binding.userLocation.translationY =
+                    -(progress * (bottomSheetPeekHeight + saveLocationHalfHeight))
             }
         })
-        binding.saveLocation.hide()
+        binding.saveLocation.alpha = 0f
 
         binding.searchField.setOnClickListener {
             openChildFragment(LocationSearchFragment.newInstance())

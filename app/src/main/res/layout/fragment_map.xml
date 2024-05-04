@@ -73,12 +73,12 @@
             android:id="@+id/user_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
+            android:layout_margin="10dp"
             android:elevation="4dp"
             android:src="@drawable/ic_find_my_location"
             app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings"
             app:shapeAppearance="@drawable/bg_flouting_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,10 +86,9 @@
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="852dp"
-        android:background="@drawable/bd_bottom_sheet"
         android:elevation="6dp"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="143dp"
+        app:behavior_peekHeight="@dimen/bottom_sheet_peek_height"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <androidx.fragment.app.FragmentContainerView
@@ -102,12 +101,11 @@
         android:id="@+id/save_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
         android:layout_marginHorizontal="10dp"
         android:elevation="8dp"
         android:src="@drawable/ic_bookmark_add"
         app:fabSize="normal"
-        app:layout_anchor="@id/bottom_sheet"
-        app:layout_anchorGravity="top|end"
         app:shapeAppearance="@drawable/bg_flouting_button" />
 
     <androidx.fragment.app.FragmentContainerView
