@@ -36,13 +36,13 @@ class WeatherItemMapper(
             CurrentConditionsItem(
                 weather.currentConditions.weatherIcon,
                 weather.currentConditions.weatherState,
-                convertTemp(weather.currentConditions.tempF, tempUnit).toString(),
+                convertTemp(weather.currentConditions.tempF, tempUnit),
                 resources.getString(
                     R.string.feels_like,
                     convertTemp(
                         weather.currentConditions.feelsLikeF,
                         tempUnit
-                    ).toString()
+                    )
                 )
             ),
             ForecastLocationItem(weather.location.region, weather.location.country),
@@ -63,7 +63,7 @@ class WeatherItemMapper(
         return HourWeatherItem(
             timeFormatter.format(weather.timestamp.toDate()),
             weather.weatherIcon,
-            convertTemp(weather.tempF, tempUnit).toString()
+            convertTemp(weather.tempF, tempUnit)
         )
     }
 
@@ -72,18 +72,20 @@ class WeatherItemMapper(
             dayFormatter.format(weather.timestamp.toDate()),
             weather.weatherIcon,
             weather.weatherState,
-            convertTemp(weather.minTempF, tempUnit).toString(),
-            convertTemp(weather.maxTempF, tempUnit).toString(),
+            convertTemp(weather.minTempF, tempUnit),
+            convertTemp(weather.maxTempF, tempUnit),
             weather.hourlyForecast.map(::mapToHourWeatherItem)
         )
     }
 
-    private fun convertTemp(tempF: Float, tempUnit: TemperatureUnit): Int {
-        return if (tempUnit == TemperatureUnit.CELSIUS) {
+    private fun convertTemp(tempF: Float, tempUnit: TemperatureUnit): String {
+        val result = if (tempUnit == TemperatureUnit.CELSIUS) {
             (tempF - 32) * (5f / 9f)
         } else {
             tempF
         }.roundToInt()
+
+        return "$result°"
     }
 }
 
