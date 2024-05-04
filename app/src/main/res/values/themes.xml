@@ -5,9 +5,5 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bd_bottom_sheet</item>
-    </style>
-
     <style name="Theme.Weather" parent="Base.Theme.Weather" />
 </resources>
