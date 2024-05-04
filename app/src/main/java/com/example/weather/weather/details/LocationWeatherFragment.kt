@@ -42,7 +42,7 @@ class LocationWeatherFragment : BottomSheetDialogFragment() {
         lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect {
                 if (it is UiState.DisplayWeather) {
-                    val list = WeatherItemMapper(it.tempUnit).map(it.weather)
+                    val list = WeatherItemMapper(resources, it.tempUnit).map(it.weather)
                     adapter.submitList(list)
                 }
             }

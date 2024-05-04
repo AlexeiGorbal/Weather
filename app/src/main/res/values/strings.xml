@@ -2,9 +2,8 @@
     <string name="app_name">Weather</string>
     <string name="search_here">Search here</string>
     <string name="no_result">No result</string>
-    <string name="comma">,</string>
 
-    <string name="feels_like">Feels like </string>
+    <string name="feels_like">Feels like %s</string>
     <string name="twenty_four_hour">24-Hour</string>
     <string name="seven_day_forecast">7-Day Forecast</string>
 

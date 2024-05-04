@@ -1,5 +1,7 @@
 package com.example.weather.weather.details
 
+import android.content.res.Resources
+import com.example.weather.R
 import com.example.weather.weather.DayWeather
 import com.example.weather.weather.HourWeather
 import com.example.weather.weather.LocationWeather
@@ -17,7 +19,10 @@ import java.util.Locale
 import java.util.TimeZone
 import kotlin.math.roundToInt
 
-class WeatherItemMapper(private val tempUnit: TemperatureUnit) {
+class WeatherItemMapper(
+    private val resources: Resources,
+    private val tempUnit: TemperatureUnit
+) {
 
     private val dayFormatter = SimpleDateFormat("EEEE, d", Locale.getDefault()).apply {
         timeZone = TimeZone.getDefault()
@@ -32,17 +37,20 @@ class WeatherItemMapper(private val tempUnit: TemperatureUnit) {
                 weather.currentConditions.weatherIcon,
                 weather.currentConditions.weatherState,
                 convertTemp(weather.currentConditions.tempF, tempUnit).toString(),
-                "Feels like " + convertTemp(
-                    weather.currentConditions.feelsLikeF,
-                    tempUnit
-                ).toString()
+                resources.getString(
+                    R.string.feels_like,
+                    convertTemp(
+                        weather.currentConditions.feelsLikeF,
+                        tempUnit
+                    ).toString()
+                )
             ),
             ForecastLocationItem(weather.location.region, weather.location.country),
-            TitleItem("24-Hour"),
+            TitleItem(resources.getString(R.string.twenty_four_hour)),
             HourlyForecastItem(
                 weather.today.hourlyForecast.map(::mapToHourWeatherItem)
             ),
-            TitleItem("7-Day Forecast"),
+            TitleItem(resources.getString(R.string.seven_day_forecast)),
         )
 
         val forecast = weather.forecast.map(::mapToDayWeatherItem)
