@@ -136,9 +136,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 if (slideOffset > 0) {
                     binding.saveLocation.alpha = 1 - min(1f, slideOffset * 2)
 
-                    val progress = slideOffset
                     binding.saveLocation.translationY =
-                        -(bottomSheetPeekHeight + progress * (bottomSheet.height - bottomSheetPeekHeight)) + saveLocationHalfHeight
+                        -(bottomSheetPeekHeight + slideOffset * (bottomSheet.height - bottomSheetPeekHeight)) + saveLocationHalfHeight
                 } else {
                     binding.saveLocation.alpha = 1 + max(-1f, slideOffset * 2)
 
