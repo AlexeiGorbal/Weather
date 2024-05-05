@@ -6,11 +6,12 @@ import android.app.NotificationManager
 import android.os.Build
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.example.weather.ongoing.UpdateOngoingNotificationWorker
 import dagger.hilt.android.HiltAndroidApp
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -32,25 +33,17 @@ class WeatherApplication : Application(), Configuration.Provider {
             notificationManager.createNotificationChannel(mChannel)
         }
 
-        val uploadWorkRequest: WorkRequest =
-            OneTimeWorkRequestBuilder<UpdateOngoingNotificationWorker>()
+        val updateOngoingNotificationRequest =
+            PeriodicWorkRequestBuilder<UpdateOngoingNotificationWorker>(15, TimeUnit.MINUTES)
                 .build()
 
         WorkManager
             .getInstance(applicationContext)
-            .enqueue(uploadWorkRequest)
-
-//        val updateOngoingNotificationRequest =
-//            PeriodicWorkRequestBuilder<UpdateOngoingNotificationWorker>(15, TimeUnit.MINUTES)
-//                .build()
-//
-//        WorkManager
-//            .getInstance(applicationContext)
-//            .enqueueUniquePeriodicWork(
-//                "updateOngoingNotificationWorker",
-//                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
-//                updateOngoingNotificationRequest
-//            )
+            .enqueueUniquePeriodicWork(
+                "updateOngoingNotificationWorker",
+                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+                updateOngoingNotificationRequest
+            )
     }
 
     override val workManagerConfiguration: Configuration

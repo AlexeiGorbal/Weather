@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -55,9 +56,11 @@ class UpdateOngoingNotificationWorker @AssistedInject constructor(
                     val build = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
                         .setContentTitle(applicationContext.resources.getString(R.string.app_name))
                         .setContentText("${weather.currentConditions.tempF}° ${weather.location.region}, ${weather.location.country}")
+                        .setSmallIcon(R.mipmap.ic_launcher)
 
                     with(NotificationManagerCompat.from(applicationContext)) {
-                        if (applicationContext.checkSelfPermission(
+                        if (ContextCompat.checkSelfPermission(
+                                applicationContext,
                                 Manifest.permission.POST_NOTIFICATIONS
                             ) == PackageManager.PERMISSION_GRANTED
                         ) {

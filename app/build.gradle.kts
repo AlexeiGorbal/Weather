@@ -68,6 +68,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.50")
     implementation("androidx.hilt:hilt-common:1.2.0")
     implementation("androidx.hilt:hilt-work:1.2.0")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.50")
 
     val room_version = "2.6.0"
