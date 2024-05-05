@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_back"
-            app:title="Settings" />
+            app:title="@string/settings" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -58,13 +58,13 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="C" />
+            android:text="@string/celsius" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fahrenheit"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="F" />
+            android:text="@string/fahrenheit" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

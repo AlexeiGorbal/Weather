@@ -13,4 +13,6 @@
 
     <string name="settings">Settings</string>
     <string name="temperature">Temperature</string>
+    <string name="celsius" translatable="false">C°</string>
+    <string name="fahrenheit" translatable="false">F°</string>
 </resources>
