@@ -3,6 +3,7 @@ package com.example.weather.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -110,6 +111,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
+        val screenHeight = Resources.getSystem().displayMetrics.heightPixels
+        binding.bottomSheet.layoutParams.height = (screenHeight * 90) / 100
         return _binding?.root
     }
 
