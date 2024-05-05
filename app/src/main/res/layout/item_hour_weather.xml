@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="56dp"
     android:layout_height="@dimen/item_hour_weather_height"
     android:background="@color/item">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/time"
-        android:layout_width="50dp"
+        android:layout_width="match_parent"
         android:layout_height="25dp"
         android:background="@android:color/transparent"
         android:gravity="center"
@@ -19,7 +19,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/current_weather_icon"
-        android:layout_width="50dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/time"
@@ -27,11 +27,11 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_temperature"
-        android:layout_width="50dp"
+        android:layout_width="match_parent"
         android:layout_height="25dp"
         android:gravity="center"
-        tools:text="3"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/current_weather_icon" />
+        app:layout_constraintTop_toBottomOf="@id/current_weather_icon"
+        tools:text="3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
