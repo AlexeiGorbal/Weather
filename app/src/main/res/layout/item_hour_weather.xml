@@ -2,17 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="56dp"
+    android:layout_width="@dimen/item_hour_width"
     android:layout_height="@dimen/item_hour_weather_height"
     android:background="@color/item">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/time"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="@dimen/item_hour_text_height"
         android:background="@android:color/transparent"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="@dimen/item_hour_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="12:00" />
@@ -20,7 +20,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/current_weather_icon"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/item_hour_icon_height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/time"
         tools:background="@drawable/ic_launcher_background" />
@@ -28,9 +28,9 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_temperature"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="@dimen/item_hour_text_height"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="@dimen/item_hour_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current_weather_icon"
         tools:text="3" />

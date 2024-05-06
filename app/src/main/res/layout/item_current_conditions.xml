@@ -7,8 +7,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/current_weather_icon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/item_current_conditions_icon_layout"
+        android:layout_height="@dimen/item_current_conditions_icon_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@drawable/ic_launcher_background" />
@@ -16,10 +16,10 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/current_temperature"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/item_current_conditions_icon_layout"
         android:includeFontPadding="false"
         android:fontFamily="sans-serif-light"
-        android:textSize="74sp"
+        android:textSize="@dimen/item_current_conditions_temp_size"
         app:layout_constraintStart_toEndOf="@+id/current_weather_icon"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="3" />
@@ -28,8 +28,8 @@
         android:id="@+id/current_weather_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:textSize="20sp"
+        android:layout_margin="@dimen/item_current_conditions_margin"
+        android:textSize="@dimen/default_text_size"
         app:layout_constraintStart_toEndOf="@id/current_temperature"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="cloudy" />
@@ -38,8 +38,8 @@
         android:id="@+id/current_feels_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:textSize="20sp"
+        android:layout_margin="@dimen/item_current_conditions_margin"
+        android:textSize="@dimen/default_text_size"
         app:layout_constraintStart_toEndOf="@id/current_temperature"
         app:layout_constraintTop_toBottomOf="@id/current_weather_state"
         tools:text="feels like 0c" />
