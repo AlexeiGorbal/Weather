@@ -52,4 +52,7 @@
     <dimen name="map_view_margin">6dp</dimen>
     <dimen name="map_view_height">4dp</dimen>
     <dimen name="map_view_width">22dp</dimen>
+    <dimen name="map_image_margin">10dp</dimen>
+    <dimen name="map_pudding">50dp</dimen>
+    <dimen name="map_radius">40dp</dimen>
 </resources>
