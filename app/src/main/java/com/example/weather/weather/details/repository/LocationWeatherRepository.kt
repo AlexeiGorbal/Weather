@@ -5,6 +5,7 @@ import com.example.weather.weather.DayWeather
 import com.example.weather.weather.ForecastLocation
 import com.example.weather.weather.HourWeather
 import com.example.weather.weather.LocationWeather
+import com.example.weather.weather.details.repository.local.WeatherDao
 import com.example.weather.weather.details.repository.remote.CurrentConditionsEntity
 import com.example.weather.weather.details.repository.remote.DayWeatherEntity
 import com.example.weather.weather.details.repository.remote.ForecastLocationEntity
@@ -15,7 +16,8 @@ import javax.inject.Singleton
 
 @Singleton
 class LocationWeatherRepository @Inject constructor(
-    private val api: WeatherApi
+    private val api: WeatherApi,
+    private val dao: WeatherDao
 ) {
 
     suspend fun loadWeather(locationId: Long): LocationWeather {

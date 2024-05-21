@@ -3,6 +3,7 @@ package com.example.weather.db
 import android.content.Context
 import androidx.room.Room
 import com.example.weather.location.saved.repository.local.LocationInfoDao
+import com.example.weather.weather.details.repository.local.WeatherDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,13 @@ class DatabaseModule {
     @Provides
     fun provideLocationInfoDao(appDatabase: AppDatabase): LocationInfoDao {
         return appDatabase.getLocationInfoDao()
+
+    }
+
+    @Singleton
+    @Provides
+    fun provideWeatherDao(appDatabase: AppDatabase): WeatherDao {
+        return appDatabase.getWeatherDao()
     }
 
     @Singleton
