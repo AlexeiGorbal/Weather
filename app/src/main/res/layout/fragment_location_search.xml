@@ -6,16 +6,36 @@
     android:layout_height="match_parent"
     android:background="?android:windowBackground"
     android:clickable="true"
+    android:fitsSystemWindows="true"
     android:focusable="true"
-    tools:context=".search.LocationSearchFragment">
+    tools:context=".location.search.LocationSearchFragment">
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/search_location"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/search_field_height"
+        android:layout_marginHorizontal="@dimen/search_field_margin_horizontal"
+        android:layout_marginTop="@dimen/default_margin"
+        android:background="@drawable/bg_search_field"
+        android:hint="@string/search_here"
+        android:imeOptions="actionDone"
+        android:paddingStart="@dimen/search_field_padding_start"
+        android:paddingEnd="@dimen/search_field_padding_end"
+        android:singleLine="true"
+        android:textSize="@dimen/search_field_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/back"
+        android:layout_width="@dimen/search_field_image_layout"
+        android:layout_height="@dimen/search_field_image_layout"
+        android:background="@null"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@id/search_location"
+        app:layout_constraintStart_toStartOf="@id/search_location"
+        app:layout_constraintTop_toTopOf="@id/search_location" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -29,8 +49,8 @@
         android:id="@+id/no_results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="no result"
-        android:textSize="20sp"
+        android:text="@string/no_result"
+        android:textSize="@dimen/default_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_location" />
@@ -44,5 +64,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_location"
-        tools:listitem="@layout/location_item" />
+        tools:listitem="@layout/item_search_location" />
 </androidx.constraintlayout.widget.ConstraintLayout>

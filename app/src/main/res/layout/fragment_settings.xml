@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:windowBackground"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".location.saved.SavedLocationsFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="@string/settings" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/temperature"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_settings_margin"
+        android:layout_marginTop="@dimen/default_settings_margin"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/temperature"
+        android:textSize="@dimen/settings_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/temperature_toggle_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_settings_margin"
+        android:layout_marginTop="@dimen/default_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temperature"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/celsius"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/celsius" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fahrenheit"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fahrenheit" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>
