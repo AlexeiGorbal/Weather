@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.weather.databinding.FragmentLocationWeatherBinding
 import com.example.weather.weather.details.list.LocationWeatherAdapter
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LocationWeatherFragment : BottomSheetDialogFragment() {
+class LocationWeatherFragment : Fragment() {
 
     private var _binding: FragmentLocationWeatherBinding? = null
     private val binding: FragmentLocationWeatherBinding

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weather.R
 import com.example.weather.databinding.FragmentSavedLocationsBinding
 import com.example.weather.location.saved.list.SavedLocationsAdapter
+import com.example.weather.location.search.LocationSearchFragment
+import com.example.weather.settings.SettingsFragment
 import com.example.weather.utils.SimpleItemTouchCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -49,8 +52,20 @@ class SavedLocationsFragment : Fragment() {
         }
         binding.savedLocations.adapter = adapter
 
-        binding.toolbar.setNavigationOnClickListener {
+        binding.back.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding.settings.setOnClickListener {
+            childFragmentManager.commit {
+                replace(R.id.search_fragment_container, SettingsFragment.newInstance())
+            }
+        }
+
+        binding.searchField.setOnClickListener {
+            childFragmentManager.commit {
+                add(R.id.search_fragment_container, LocationSearchFragment.newInstance())
+            }
         }
 
         val swipeCallback = object : SimpleItemTouchCallback() {
