@@ -58,7 +58,7 @@ class SavedLocationsFragment : Fragment() {
 
         binding.settings.setOnClickListener {
             childFragmentManager.commit {
-                replace(R.id.child_fragment_container, SettingsFragment.newInstance())
+                replace(R.id.search_fragment_container, SettingsFragment.newInstance())
             }
         }
 
